@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EventGo - Event Booking</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #fafafa;
+            color: #222;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        nav {
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            background: white;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .logo-icon {
+            width: 28px;
+            height: 28px;
+            border: 2px solid #7654d6;
+            color: #7654d6;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .nav-links a:first-child {
+            color: #e84c9a;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .login-btn,
+        .register-btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .login-btn {
+            background: white;
+            border: 1px solid #ddd;
+        }
+
+        .register-btn {
+            border: none;
+            background: #7551d1;
+            color: white;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            margin: 0 4%;
+            min-height: 330px;
+            padding: 45px 7%;
+            background: linear-gradient(
+                90deg,
+                #f5f5ff,
+                #eef0ff,
+                #f9edff
+            );
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            width: 48%;
+        }
+
+        .hero-content h1 {
+            font-size: 42px;
+            line-height: 1.15;
+            margin-bottom: 18px;
+        }
+
+        .hero-content p {
+            color: #555;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .hero-image {
+            width: 45%;
+            height: 260px;
+            background-image: url("https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=800&q=80");
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+        }
+
+        /* ================= SEARCH ================= */
+
+        .search-box {
+            background: white;
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            width: 700px;
+            max-width: 100%;
+        }
+
+        .search-item {
+            flex: 1;
+            padding: 10px 18px;
+            border-right: 1px solid #eee;
+        }
+
+        .search-item:last-of-type {
+            border-right: none;
+        }
+
+        .search-item small {
+            display: block;
+            color: #777;
+            margin-bottom: 5px;
+        }
+
+        .search-item p {
+            margin: 0;
+            font-size: 13px;
+            color: #555;
+        }
+
+        .search-btn {
+            padding: 15px 28px;
+            border: none;
+            border-radius: 7px;
+            background: #7551d1;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        /* ================= CONTAINER ================= */
+
+        .container {
+            width: 88%;
+            margin: auto;
+        }
+
+        /* ================= SECTION TITLE ================= */
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 30px 0 18px;
+        }
+
+        .section-header h2 {
+            font-size: 20px;
+        }
+
+        .section-header a {
+            text-decoration: none;
+            color: #7551d1;
+            font-size: 14px;
+        }
+
+        /* ================= CATEGORIES ================= */
+
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 15px;
+        }
+
+        .category-card {
+            background: white;
+            height: 110px;
+            border-radius: 10px;
+            border: 1px solid #eee;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.03);
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            transition: 0.3s;
+        }
+
+        .category-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #f3efff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        .category-card p {
+            font-size: 13px;
+        }
+
+        /* ================= EVENTS ================= */
+
+        .events {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .event-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #eee;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+
+        .event-image {
+            height: 130px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .img1 {
+            background-image: url("https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=600&q=80");
+        }
+
+        .img2 {
+            background-image: url("https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=600&q=80");
+        }
+
+        .img3 {
+            background-image: url("https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80");
+        }
+
+        .img4 {
+            background-image: url("https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=600&q=80");
+        }
+
+        .event-info {
+            padding: 15px;
+        }
+
+        .event-info h3 {
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+
+        .event-info p {
+            color: #777;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .event-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .date {
+            font-size: 12px;
+            color: #777;
+        }
+
+        .price {
+            color: #7551d1;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        /* ================= NEWSLETTER ================= */
+
+        .newsletter {
+            background: linear-gradient(90deg, #f0ecff, #eee9ff);
+            padding: 25px 7%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .newsletter h3 {
+            font-size: 15px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .newsletter input {
+            width: 280px;
+            padding: 13px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            outline: none;
+        }
+
+        .newsletter button {
+            background: #7551d1;
+            color: white;
+            border: none;
+            padding: 13px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 900px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                flex-direction: column;
+            }
+
+            .hero-content,
+            .hero-image {
+                width: 100%;
+            }
+
+            .hero-image {
+                margin-top: 25px;
+            }
+
+            .search-box {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-item {
+                border-right: none;
+                border-bottom: 1px solid #eee;
+            }
+
+            .categories {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .events {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .newsletter {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            nav {
+                padding: 0 4%;
+            }
+
+            .hero-content h1 {
+                font-size: 30px;
+            }
+
+            .events {
+                grid-template-columns: 1fr;
+            }
+
+            .categories {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .newsletter input {
+                width: 100%;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav>
+
+        <div class="logo">
+            <div class="logo-icon">▣</div>
+            Event<span style="color:#e84c9a;">Go</span>
+        </div>
+
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Events</a>
+            <a href="#">Categories</a>
+            <a href="#">My Bookings</a>
+            <a href="#">About Us</a>
+            <a href="#">Contact</a>
+        </div>
+
+        <div class="nav-buttons">
+            <button class="login-btn">Login</button>
+            <button class="register-btn">Register</button>
+        </div>
+
+    </nav>
+
+
+    <!-- HERO SECTION -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>Your Gateway to<br>Unforgettable Events</h1>
+
+            <p>
+                Find and book the best events happening around you.
+            </p>
+
+            <div class="search-box">
+
+                <div class="search-item">
+                    <small>📍 Location</small>
+                    <p>Enter location</p>
+                </div>
+
+                <div class="search-item">
+                    <small>📅 Date</small>
+                    <p>Select date</p>
+                </div>
+
+                <div class="search-item">
+                    <small>☷ Category</small>
+                    <p>All Categories</p>
+                </div>
+
+                <button class="search-btn">
+                    🔍 Search
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="hero-image"></div>
+
+    </section>
+
+
+    <main class="container">
+
+
+        <!-- CATEGORIES -->
+
+        <div class="section-header">
+            <h2>Browse Categories</h2>
+        </div>
+
+        <section class="categories">
+
+            <div class="category-card">
+                <div class="category-icon">🎵</div>
+                <p>Music</p>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon">⚽</div>
+                <p>Sports</p>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon">🎭</div>
+                <p>Theatre</p>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon">😊</div>
+                <p>Comedy</p>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon">🎓</div>
+                <p>Workshops</p>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon">🖼️</div>
+                <p>Exhibitions</p>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon">•••</div>
+                <p>More</p>
+            </div>
+
+        </section>
+
+
+        <!-- UPCOMING EVENTS -->
+
+        <div class="section-header">
+
+            <h2>Upcoming Events</h2>
+
+            <a href="#">View All →</a>
+
+        </div>
+
+
+        <section class="events">
+
+
+            <!-- EVENT 1 -->
+
+            <div class="event-card">
+
+                <div class="event-image img1"></div>
+
+                <div class="event-info">
+
+                    <h3>Sunburn Arena 2024</h3>
+
+                    <p>📍 Goa, India</p>
+
+                    <div class="event-bottom">
+
+                        <span class="date">📅 12 JUL 2024</span>
+
+                        <span class="price">₹1099</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- EVENT 2 -->
+
+            <div class="event-card">
+
+                <div class="event-image img2"></div>
+
+                <div class="event-info">
+
+                    <h3>Lagaan The Musical</h3>
+
+                    <p>📍 Mumbai, India</p>
+
+                    <div class="event-bottom">
+
+                        <span class="date">📅 18 JUL 2024</span>
+
+                        <span class="price">₹1299</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- EVENT 3 -->
+
+            <div class="event-card">
+
+                <div class="event-image img3"></div>
+
+                <div class="event-info">
+
+                    <h3>Delhi Food Festival</h3>
+
+                    <p>📍 Delhi, India</p>
+
+                    <div class="event-bottom">
+
+                        <span class="date">📅 20 JUL 2024</span>
+
+                        <span class="price">₹499</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- EVENT 4 -->
+
+            <div class="event-card">
+
+                <div class="event-image img4"></div>
+
+                <div class="event-info">
+
+                    <h3>Tech Conference 2024</h3>
+
+                    <p>📍 Bengaluru, India</p>
+
+                    <div class="event-bottom">
+
+                        <span class="date">📅 25 JUL 2024</span>
+
+                        <span class="price">₹1499</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- NEWSLETTER -->
+
+    <section class="newsletter">
+
+        <h3>📩 Get updates on exciting events & offers!</h3>
+
+        <div class="newsletter-form">
+
+            <input
+                type="email"
+                placeholder="Enter your email"
+            >
+
+            <button>Subscribe</button>
+
+        </div>
+
+    </section>
+
+</body>
+</html>
