@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        body{
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+           
+
+        }
+        h2{
+            text-align: center;
+            display: block;
+            width: 100%;
+        }
+        form{
+            border: 2px solid black;
+            gap: 5px;
+            padding: 30px;
+            border-radius: 10%;
+        }
+        label{
+            width: 120px;
+        }
+        div{
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+
+        }
+        .button{
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 8px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <form method="post" action="index.html">
+        <h2>Registration Form</h2>
+        <div>
+            <label>Full Name:</label>
+            <input type="text" placeholder="Enter Name" required>
+        </div>
+         <div>
+            <label>E-mail ID:</label>
+            <input type="email" placeholder="Enter E-mail" required>
+        </div>
+         <div>
+            <label>Password:</label>
+            <input type="password" placeholder="Enter password" required>
+        </div>
+         <div>
+            <label>Confirm Password:</label>
+            <input type="password" placeholder="Confirm password" required>
+        </div>
+         <div>
+            <label>Phone Number:</label>
+            <input type="tel" placeholder="Enter Phone Number" required>
+        </div>
+         <div>
+            <label>Date Of Birth:</label>
+            <input type="date" placeholder="Enter DOB" required>
+        </div>
+         <div>
+            <label>Gender:</label>
+            <input type="radio" name="gender" value="male" required>Male
+            <input type="radio" name="gender" value="Female" required>Female
+            <input type="radio" name="gender" value="other" required>Other
+        </div>
+         <div>
+            <label>Address:</label>
+            <textarea rows="1" placeholder="Enter your Address" required></textarea>
+        </div><br><br>
+        <div class="button">
+           <button type="submit" value="Register">Register</button>
+           <button type="reset" value="reset form">Reset</button>
+        </div>
+        
+        
+    </form>
+</body>
+</html>
