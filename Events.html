@@ -1,0 +1,1023 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EventGo - Explore Events</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        :root {
+            --pink: #e91e83;
+            --dark: #142d4e;
+            --muted: #637083;
+            --border: #e1e6ed;
+            --light: #f5f7fa;
+        }
+
+        body {
+            color: var(--dark);
+            background: #fff;
+            font-size: 14px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button, input, select {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        /* NAVBAR */
+
+        nav {
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            background: white;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+        .logo-icon img {
+            width: 50px;
+            height: 50px;
+            border: 2px solid #7654d6;
+            color: #7654d6;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .nav-links a:first-child {
+            color: #e84c9a;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .login-btn,
+        .register-btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .login-btn {
+            background: white;
+            border: 1px solid #ddd;
+        }
+
+        .register-btn {
+            border: none;
+            background: #7551d1;
+            color: white;
+        }
+
+        /* HERO */
+
+        .hero {
+            min-height: 175px;
+            padding: 40px 4%;
+            background:
+                linear-gradient(90deg, #fff0f8 0%, #fce8f4 48%,
+                rgba(252,232,244,.55) 68%, transparent 100%),
+                url("https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=1600&q=85")
+                center 48% / cover;
+        }
+
+        .hero h1 {
+            font-size: clamp(28px, 3.3vw, 38px);
+            margin-bottom: 8px;
+            font-weight: 750;
+        }
+
+        .hero p {
+            font-size: 17px;
+            color: #455a72;
+        }
+
+        /* SEARCH */
+
+        .search-wrapper {
+            max-width: 1200px;
+            margin: -1px auto 20px;
+            padding: 18px 4%;
+            position: relative;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .search-box {
+            display: grid;
+            grid-template-columns: 1.4fr 1.1fr 1.1fr 1fr auto;
+            gap: 12px;
+        }
+
+        .search-field {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+        }
+
+        .search-field .symbol {
+            color: var(--muted);
+            font-size: 19px;
+        }
+
+        .search-field input,
+        .search-field select {
+            min-width: 0;
+            width: 100%;
+            border: none;
+            outline: none;
+            color: var(--dark);
+            background: transparent;
+        }
+
+        .search-field input::placeholder {
+            color: #68778a;
+        }
+
+        .search-btn {
+            border: none;
+            border-radius: 6px;
+            padding: 0 24px;
+            background: #7551d1;
+            color: white;
+        }
+
+        /* MAIN */
+
+        .container {
+            width: 92%;
+            max-width: 1450px;
+            margin: 0 auto;
+        }
+
+        /* CATEGORY FILTER */
+
+        .categories {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 4px 0 25px;
+        }
+
+        .category-btn {
+            flex: 1 0 auto;
+            min-width: 90px;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 30px;
+            background: var(--light);
+            color: #34445a;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background: #7551d1;
+            color: white;
+        }
+
+        /* SECTION HEADER */
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin: 8px 0 18px;
+        }
+
+        .section-header h2 {
+            font-size: 25px;
+            font-weight: 700;
+        }
+
+        .sort-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--muted);
+        }
+
+        .sort-box select {
+            padding: 9px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: white;
+            color: var(--dark);
+        }
+
+        /* EVENTS GRID */
+
+        .events {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 15px;
+        }
+
+        .event-card {
+            min-width: 0;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            background: white;
+            transition: transform .2s, box-shadow .2s;
+        }
+
+        .event-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 22px rgba(20, 45, 78, .09);
+        }
+
+        .event-image {
+            height: 120px;
+            width: 100%;
+            object-fit: cover;
+            display: block;
+            background: #eee;
+        }
+
+        .event-info {
+            padding: 12px;
+        }
+
+        .event-info h3 {
+            font-size: 15px;
+            margin-bottom: 9px;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        .event-detail {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 8px 0;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .event-detail .symbol {
+            font-size: 15px;
+        }
+
+        .event-bottom {
+            margin-top: 11px;
+        }
+
+        .price {
+            display: block;
+            color: #7551d1;
+            font-weight: 750;
+            font-size: 17px;
+            margin-bottom: 8px;
+        }
+
+        .book-btn {
+            width: 100%;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            background: #7551d1;
+        }
+
+        .book-btn:hover {
+            background: #c91870;
+        }
+
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 50px 10px;
+            color: var(--muted);
+        }
+
+        /* PAGINATION */
+
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 28px 0 24px;
+        }
+
+        .page-btn {
+            min-width: 34px;
+            padding: 9px 12px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            color: var(--dark);
+        }
+
+        .page-btn.active,
+        .page-btn:hover {
+            background: #7551d1;
+            border-color: #7551d1;
+            color: white;
+        }
+
+        /* NEWSLETTER */
+
+        .newsletter {
+            margin-top: 0;
+            padding: 22px 4%;
+            background: #fff0f8;
+        }
+
+        .newsletter-inner {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .newsletter h3 {
+            font-size: 19px;
+            font-weight: 650;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+            width: 42%;
+        }
+
+        .newsletter-form input {
+            width: 100%;
+            min-width: 0;
+            padding: 11px 14px;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            outline: none;
+            background: white;
+        }
+
+        .newsletter-form button {
+            padding: 10px 20px;
+            background: #7551d1;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        /* FOOTER */
+
+        footer {
+            background: #102441;
+            color: white;
+            padding: 30px 4% 12px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 35px;
+            padding-bottom: 25px;
+        }
+
+        .footer-logo {
+            font-size: 26px;
+            font-weight: 750;
+            margin-bottom: 10px;
+        }
+
+        .footer-logo span {
+            color: var(--pink);
+        }
+
+        .footer-desc {
+            color: #c4d0df;
+            line-height: 1.7;
+        }
+
+        footer h4 {
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .footer-links a,
+        .footer-contact p {
+            color: #c4d0df;
+            font-size: 13px;
+        }
+
+        .footer-links a:hover {
+            color: #ff76bd;
+        }
+
+        .footer-contact p {
+            margin-bottom: 10px;
+        }
+
+        .copyright {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            flex-wrap: wrap;
+            padding-top: 14px;
+            border-top: 1px solid #344760;
+            color: #c4d0df;
+            font-size: 12px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 1050px) {
+            nav {
+                flex-wrap: wrap;
+            }
+
+            .nav-links {
+                gap: 17px;
+            }
+
+            .search-box {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .search-btn {
+                min-height: 42px;
+            }
+
+            .events {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+
+            .newsletter-inner {
+                flex-wrap: wrap;
+            }
+
+            .newsletter-form {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 700px) {
+            nav {
+                gap: 12px;
+            }
+
+            .logo {
+                font-size: 24px;
+            }
+
+            .nav-links {
+                order: 3;
+                width: 100%;
+                overflow-x: auto;
+                gap: 22px;
+            }
+
+            .nav-buttons {
+                margin-left: auto;
+            }
+
+            .hero {
+                padding: 34px 5%;
+                background-position: center;
+            }
+
+            .hero h1 {
+                font-size: 29px;
+            }
+
+            .hero p {
+                font-size: 14px;
+            }
+
+            .search-wrapper {
+                width: 92%;
+                padding: 12px;
+            }
+
+            .search-box {
+                grid-template-columns: 1fr;
+                gap: 9px;
+            }
+
+            .search-field {
+                min-height: 43px;
+            }
+
+            .search-btn {
+                min-height: 43px;
+            }
+
+            .container {
+                width: 92%;
+            }
+
+            .events {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+            }
+
+            .event-image {
+                height: 105px;
+            }
+
+            .event-info {
+                padding: 9px;
+            }
+
+            .event-info h3 {
+                font-size: 13px;
+            }
+
+            .event-detail {
+                font-size: 11px;
+            }
+
+            .section-header h2 {
+                font-size: 21px;
+            }
+
+            .sort-box {
+                font-size: 12px;
+                gap: 5px;
+            }
+
+            .sort-box select {
+                max-width: 110px;
+                padding: 8px 5px;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 25px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .events {
+                grid-template-columns: 1fr;
+            }
+
+            .event-image {
+                height: 165px;
+            }
+
+            .nav-buttons .btn {
+                padding: 8px 10px;
+            }
+
+            .section-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+
+        <div class="logo">
+            <div class="logo-icon">
+                <img src="logo_event.jpeg">
+            </div>
+            Event<span style="color:#e84c9a;">Go</span>
+        </div>
+
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="Events.html">Events</a>
+            <a href="#">Categories</a>
+            <a href="#">My Bookings</a>
+            <a href="#">About Us</a>
+            <a href="#">Contact</a>
+        </div>
+
+        <div class="nav-buttons">
+            <button onclick="window.location.href='login page.html'" class="login-btn">Login</button>
+            <button onclick="window.location.href='registration page.html'"class="register-btn">Register</button>
+        </div>
+
+    </nav>
+
+    <header class="hero">
+        <h1>Discover Amazing Events</h1>
+        <p>Find events that match your interests</p>
+    </header>
+
+    <!-- SEARCH -->
+
+    <div class="search-wrapper">
+        <form class="search-box" id="searchForm">
+
+            <div class="search-field">
+                <span class="symbol">⌕</span>
+                <input type="search" id="searchInput"
+                    placeholder="Search events...">
+            </div>
+
+            <div class="search-field">
+                <span class="symbol">⌖</span>
+                <input type="text" id="locationInput"
+                    placeholder="Location">
+            </div>
+
+            <div class="search-field">
+                <span class="symbol">▦</span>
+                <input type="date" id="dateInput"
+                    aria-label="Event date">
+            </div>
+
+            <div class="search-field">
+                <span class="symbol">▦</span>
+                <select id="categorySelect" aria-label="Category">
+                    <option value="All">All Categories</option>
+                    <option value="Music">Music</option>
+                    <option value="Sports">Sports</option>
+                    <option value="Theatre">Theatre</option>
+                    <option value="Comedy">Comedy</option>
+                    <option value="Workshops">Workshops</option>
+                    <option value="Exhibitions">Exhibitions</option>
+                    <option value="Food">Food</option>
+                </select>
+            </div>
+
+            <button type="submit" class="search-btn">
+                ⌕ Search
+            </button>
+
+        </form>
+    </div>
+
+    <main class="container">
+
+        <!-- CATEGORIES -->
+
+        <section class="categories" id="categories">
+            <button class="category-btn active" data-category="All">All</button>
+            <button class="category-btn" data-category="Music">♫ Music</button>
+            <button class="category-btn" data-category="Sports">⚽ Sports</button>
+            <button class="category-btn" data-category="Theatre">🎭 Theatre</button>
+            <button class="category-btn" data-category="Comedy">☻ Comedy</button>
+            <button class="category-btn" data-category="Workshops">🎓 Workshops</button>
+            <button class="category-btn" data-category="Exhibitions">▧ Exhibitions</button>
+            <button class="category-btn" data-category="Food">🍽 Food</button>
+        </section>
+
+        <!-- EVENTS HEADER -->
+
+        <div class="section-header">
+            <h2 id="eventHeading">All Events</h2>
+
+            <div class="sort-box">
+                <label for="sortSelect">Sort by:</label>
+                <select id="sortSelect">
+                    <option value="popular">Popularity</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="name">Name</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- EVENTS -->
+
+        <section class="events" id="eventsGrid">
+
+            <article class="event-card" data-category="Music"
+                data-location="Goa" data-date="2026-10-12" data-price="1099">
+                <img class="event-image"
+                    src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=600&q=80"
+                    alt="Live music concert">
+                <div class="event-info">
+                    <h3>Sunburn Arena</h3>
+                    <p class="event-detail">📍 Goa, India</p>
+                    <p class="event-detail">▦ 12 OCT 2026</p>
+                    <div class="event-bottom">
+                        <span class="price">₹1099</span>
+                        <button class="book-btn" data-event="Sunburn Arena">Book Now</button>
+                    </div>
+                </div>
+            </article>
+
+            <article class="event-card" data-category="Theatre"
+                data-location="Mumbai" data-date="2026-10-18" data-price="1299">
+                <img class="event-image"
+                    src="https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&w=600&q=80"
+                    alt="Theatre musical performance">
+                <div class="event-info">
+                    <h3>Lagaan The Musical</h3>
+                    <p class="event-detail">📍 Mumbai, India</p>
+                    <p class="event-detail">▦ 18 OCT 2026</p>
+                    <div class="event-bottom">
+                        <span class="price">₹1299</span>
+                        <button class="book-btn" data-event="Lagaan The Musical">Book Now</button>
+                    </div>
+                </div>
+            </article>
+
+            <article class="event-card" data-category="Food"
+                data-location="Delhi" data-date="2026-10-20" data-price="499">
+                <img class="event-image"
+                    src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=600&q=80"
+                    alt="Food festival dishes">
+                <div class="event-info">
+                    <h3>Delhi Food Festival</h3>
+                    <p class="event-detail">📍 Delhi, India</p>
+                    <p class="event-detail">▦ 20 OCT 2026</p>
+                    <div class="event-bottom">
+                        <span class="price">₹499</span>
+                        <button class="book-btn" data-event="Delhi Food Festival">Book Now</button>
+                    </div>
+                </div>
+            </article>
+
+            <article class="event-card" data-category="Workshops"
+                data-location="Bengaluru" data-date="2026-10-25" data-price="1499">
+                <img class="event-image"
+                    src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=600&q=80"
+                    alt="Technology conference">
+                <div class="event-info">
+                    <h3>Tech Conference</h3>
+                    <p class="event-detail">📍 Bengaluru, India</p>
+                    <p class="event-detail">▦ 25 OCT 2026</p>
+                    <div class="event-bottom">
+                        <span class="price">₹1499</span>
+                        <button class="book-btn" data-event="Tech Conference">Book Now</button>
+                    </div>
+                </div>
+            </article>
+
+            <article class="event-card" data-category="Comedy"
+                data-location="Mumbai" data-date="2026-11-02" data-price="799">
+                <img class="event-image"
+                    src="https://images.unsplash.com/photo-1585699324551-f6c309eedeca?auto=format&fit=crop&w=600&q=80"
+                    alt="Comedy performance stage">
+                <div class="event-info">
+                    <h3>Comedy Night Live</h3>
+                    <p class="event-detail">📍 Mumbai, India</p>
+                    <p class="event-detail">▦ 02 NOV 2026</p>
+                    <div class="event-bottom">
+                        <span class="price">₹799</span>
+                        <button class="book-btn" data-event="Comedy Night Live">Book Now</button>
+                    </div>
+                </div>
+            </article>
+
+            <article class="event-card" data-category="Workshops"
+                data-location="Pune" data-date="2026-11-03" data-price="599">
+                <img class="event-image"
+                    src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=600&q=80"
+                    alt="Art and painting workshop">
+                <div class="event-info">
+                    <h3>Art & Painting Workshop</h3>
+                    <p class="event-detail">📍 Pune, India</p>
+                    <p class="event-detail">▦ 03 NOV 2026</p>
+                    <div class="event-bottom">
+                        <span class="price">₹599</span>
+                        <button class="book-btn" data-event="Art & Painting Workshop">Book Now</button>
+                    </div>
+                </div>
+            </article>
+
+            <article class="event-card" data-category="Sports"
+                data-location="Kolkata" data-date="2026-11-08" data-price="899">
+                <img class="event-image"
+                    src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=600&q=80"
+                    alt="Football stadium">
+                <div class="event-info">
+                    <h3>Football Match</h3>
+                    <p class="event-detail">📍 Kolkata, India</p>
+                    <p class="event-detail">▦ 08 NOV 2026</p>
+                    <div class="event-bottom">
+                        <span class="price">₹899</span>
+                        <button class="book-btn" data-event="Football Match">Book Now</button>
+                    </div>
+                </div>
+            </article>
+
+            <article class="event-card" data-category="Exhibitions"
+                data-location="Delhi" data-date="2026-11-15" data-price="699">
+                <img class="event-image"
+                    src="https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?auto=format&fit=crop&w=600&q=80"
+                    alt="Modern art exhibition">
+                <div class="event-info">
+                    <h3>Modern Art Exhibition</h3>
+                    <p class="event-detail">📍 Delhi, India</p>
+                    <p class="event-detail">▦ 15 NOV 2026</p>
+                    <div class="event-bottom">
+                        <span class="price">₹699</span>
+                        <button class="book-btn" data-event="Modern Art Exhibition">Book Now</button>
+                    </div>
+                </div>
+            </article>
+
+            <article class="event-card" data-category="Music"
+                data-location="Bengaluru" data-date="2026-11-22" data-price="1299">
+                <img class="event-image"
+                    src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=600&q=80"
+                    alt="Electronic music festival">
+                <div class="event-info">
+                    <h3>EDM Music Festival</h3>
+                    <p class="event-detail">📍 Bengaluru, India</p>
+                    <p class="event-detail">▦ 22 NOV 2026</p>
+                    <div class="event-bottom">
+                        <span class="price">₹1299</span>
+                        <button class="book-btn" data-event="EDM Music Festival">Book Now</button>
+                    </div>
+                </div>
+            </article>
+
+            <article class="event-card" data-category="Theatre"
+                data-location="Chennai" data-date="2026-11-28" data-price="799">
+                <img class="event-image"
+                    src="https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&w=600&q=80"
+                    alt="Theatre festival">
+                <div class="event-info">
+                    <h3>Theatre Festival</h3>
+                    <p class="event-detail">📍 Chennai, India</p>
+                    <p class="event-detail">▦ 28 NOV 2026</p>
+                    <div class="event-bottom">
+                        <span class="price">₹799</span>
+                        <button class="book-btn" data-event="Theatre Festival">Book Now</button>
+                    </div>
+                </div>
+            </article>
+
+            <article class="event-card" data-category="Workshops"
+                data-location="Rishikesh" data-date="2026-12-05" data-price="499">
+                <img class="event-image"
+                    src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=600&q=80"
+                    alt="Yoga and meditation">
+                <div class="event-info">
+                    <h3>Yoga & Meditation</h3>
+                    <p class="event-detail">📍 Rishikesh, India</p>
+                    <p class="event-detail">▦ 05 DEC 2026</p>
+                    <div class="event-bottom">
+                        <span class="price">₹499</span>
+                        <button class="book-btn" data-event="Yoga & Meditation">Book Now</button>
+                    </div>
+                </div>
+            </article>
+
+            <article class="event-card" data-category="Food"
+                data-location="Jaipur" data-date="2026-12-12" data-price="999">
+                <img class="event-image"
+                    src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=600&q=80"
+                    alt="Fine dining food festival">
+                <div class="event-info">
+                    <h3>Food & Dining Festival</h3>
+                    <p class="event-detail">📍 Jaipur, India</p>
+                    <p class="event-detail">▦ 12 DEC 2026</p>
+                    <div class="event-bottom">
+                        <span class="price">₹999</span>
+                        <button class="book-btn" data-event="Food & Dining Festival">Book Now</button>
+                    </div>
+                </div>
+            </article>
+
+        </section>
+
+        <!-- PAGINATION -->
+
+        <div class="pagination">
+            <button class="page-btn active" type="button">1</button>
+            <button class="page-btn" type="button"
+                onclick="alert('You are viewing all demo events on this page.')">2</button>
+            <button class="page-btn" type="button"
+                onclick="alert('You are viewing all demo events on this page.')">3</button>
+            <button class="page-btn" type="button"
+                onclick="alert('You are viewing all demo events on this page.')">Next →</button>
+        </div>
+
+    </main>
+
+    <!-- NEWSLETTER -->
+
+    <section class="newsletter">
+        <div class="newsletter-inner">
+            <h3>✈ Get updates on exciting events & offers!</h3>
+
+            <form class="newsletter-form" id="newsletterForm">
+                <input type="email" id="emailInput"
+                    placeholder="Enter your email" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+
+    <footer id="footer">
+        <div class="footer-grid">
+
+            <div>
+                <div class="footer-logo">▦ Event<span>Go</span></div>
+                <p class="footer-desc">
+                    Your Gateway to Unforgettable Events.
+                    Discover experiences, connect with people
+                    and create memories.
+                </p>
+            </div>
+
+            <div>
+                <h4>Quick Links</h4>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="events.html">Events</a>
+                    <a href="#categories">Categories</a>
+                    <a href="my-bookings.html">My Bookings</a>
+                    <a href="#footer">About Us</a>
+                </div>
+            </div>
+
+            <div>
+                <h4>Follow Us</h4>
+                <div class="footer-links">
+                    <a href="https://www.facebook.com/">Facebook</a>
+                    <a href="https://www.instagram.com/">Instagram</a>
+                    <a href="https://www.youtube.com/">YouTube</a>
+                    <a href="https://www.linkedin.com/">LinkedIn</a>
+                </div>
+            </div>
+
+            <div>
+                <h4>Contact Us</h4>
+                <div class="footer-contact">
+                    <p>✉ support@eventgo.com</p>
+                    <p>☎ +91 98765 43210</p>
+                    <p>📍 Mumbai, India</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="copyright">
+            <p>© 2026 EventGo. All rights reserved.</p>
+            <p>Terms & Conditions &nbsp; | &nbsp; Privacy Policy</p>
+        </div>
+    </footer>
+
+</body>
+</html>
