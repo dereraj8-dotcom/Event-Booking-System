@@ -64,3 +64,58 @@
                         price : "₹699"
                 }
         ];
+
+
+         eventList.forEach(function(event){
+                const card = document.createElement("div");
+        card.classList.add("event-card");
+
+        const section1 = document.createElement("section");
+        section1.classList.add("event-image");
+
+         const eventimage = document.createElement("img");
+         eventimage.src = event.img;
+
+
+         const section2 = document.createElement("section");
+        section2.classList.add("event-info");
+
+        const title = document.createElement("h3");
+        title.textContent.add = event.name;
+
+         const eventdetail = document.createElement("p");
+         eventdetail.textContent = event.description;
+        eventdetail.classList.add("event-detail");
+
+         const eventdetail1 = document.createElement("p");
+         eventdetail1.textContent = event.date;
+        eventdetail1.classList.add("event-detail");
+
+        const eventbottom = document.createElement("div");
+        eventbottom.classList.add("event-bottom");
+
+         const eventprice = document.createElement("span");
+         eventprice.textContent = event.price;
+        eventprice.classList.add("price");
+
+         const book = document.createElement("button");
+         book.textContent = "Book";
+        book.classList.add("book-btn");
+
+
+        section2.appendChild(title);
+        section2.appendChild(eventdetail);
+        section2.appendChild(eventdetail1);
+        section2.appendChild(eventbottom);
+        section2.appendChild(eventprice);
+        section2.appendChild(book);
+        section1.appendChild(eventimage);
+
+
+        card.appendChild(section1);
+        card.appendChild(section2);
+
+        const Event = document.getElementById("eventsGrid");
+        Event.appendChild(card);
+        });
+
