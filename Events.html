@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>EventGo - Explore Events</title>
+    <script src="script.js" defer></script>
 
     <style>
         * {
@@ -274,7 +275,7 @@
             box-shadow: 0 8px 22px rgba(20, 45, 78, .09);
         }
 
-        .event-image {
+        .event-image img{
             height: 120px;
             width: 100%;
             object-fit: cover;
@@ -569,7 +570,7 @@
                 gap: 10px;
             }
 
-            .event-image {
+            .event-image img {
                 height: 105px;
             }
 
@@ -745,12 +746,13 @@
 
         <section class="events" id="eventsGrid">
 
-            <article class="event-card" data-category="Music"
+            <!-- <div class="event-card" data-category="Music"
                 data-location="Goa" data-date="2026-10-12" data-price="1099">
-                <img class="event-image"
-                    src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=600&q=80"
+                <section  class="event-image">
+                <img src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=600&q=80"
                     alt="Live music concert">
-                <div class="event-info">
+                </section>
+                <section class="event-info">
                     <h3>Sunburn Arena</h3>
                     <p class="event-detail">📍 Goa, India</p>
                     <p class="event-detail">▦ 12 OCT 2026</p>
@@ -758,8 +760,8 @@
                         <span class="price">₹1099</span>
                         <button class="book-btn" data-event="Sunburn Arena">Book Now</button>
                     </div>
-                </div>
-            </article>
+                </section>
+            </div>
 
             <article class="event-card" data-category="Theatre"
                 data-location="Mumbai" data-date="2026-10-18" data-price="1299">
@@ -935,11 +937,10 @@
                         <button class="book-btn" data-event="Food & Dining Festival">Book Now</button>
                     </div>
                 </div>
-            </article>
+            </article> -->
 
-        </section>
-
-        <!-- PAGINATION -->
+        </section> 
+    
 
         <div class="pagination">
             <button class="page-btn active" type="button">1</button>
@@ -953,7 +954,7 @@
 
     </main>
 
-    <!-- NEWSLETTER -->
+
 
     <section class="newsletter">
         <div class="newsletter-inner">
