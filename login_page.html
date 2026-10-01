@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EventGo - Login</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f8f8f8;
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        nav {
+            height: 75px;
+            background: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 50px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .logo h2 {
+            font-size: 25px;
+            color: #222;
+        }
+
+        .logo span {
+            color: #e84c9a;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #e84c9a;
+        }
+
+        .login-btn {
+            padding: 9px 18px;
+            border: 1px solid #e84c9a;
+            background: #e84c9a;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .register-btn {
+            padding: 9px 18px;
+            border: 1px solid #e84c9a;
+            background: white;
+            color: #e84c9a;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+
+        /* Login Section */
+
+        .login-section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .login-container {
+            width: 420px;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-container h1 {
+            text-align: center;
+            color: #222;
+            margin-bottom: 8px;
+        }
+
+        .login-container h1 span {
+            color: #e84c9a;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 28px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            color: #333;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .form-group input:focus {
+            border-color: #e84c9a;
+        }
+
+        .forgot-password {
+            display: block;
+            text-align: right;
+            margin-top: -10px;
+            margin-bottom: 20px;
+        }
+
+        .forgot-password a {
+            color: #e84c9a;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .login-submit {
+            width: 100%;
+            padding: 12px;
+            background: #e84c9a;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .login-submit:hover {
+            background: #d63c89;
+        }
+
+        .register-text {
+            text-align: center;
+            color: #777;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+
+        .register-text a {
+            color: #e84c9a;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Responsive */
+
+        @media (max-width: 800px) {
+
+            nav {
+                padding: 0 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .login-section {
+                padding: 25px 15px;
+            }
+
+            .login-container {
+                width: 100%;
+                padding: 30px 22px;
+            }
+
+            .logo h2 {
+                font-size: 21px;
+            }
+
+            .login-btn,
+            .register-btn {
+                padding: 7px 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+
+        <div class="logo">
+
+            <img src="logo_event.jpeg" alt="EventGo Logo">
+
+            <h2>
+                Event<span>Go</span>
+            </h2>
+
+        </div>
+
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="index.html">Home</a>
+            </li>
+
+            <li>
+                <a href="Events.html">Events</a>
+            </li>
+
+            <li>
+                <a href="#">Categories</a>
+            </li>
+
+            <li>
+                <a href="#">My Bookings</a>
+            </li>
+
+            <li>
+                <a href="#">About Us</a>
+            </li>
+
+            <li>
+                <a href="#">Contact</a>
+            </li>
+
+        </ul>
+
+
+        <div>
+
+            <button class="login-btn" onclick="location.href='login_page.html'">
+                Login
+            </button>
+
+            <button
+                class="register-btn"
+                onclick="location.href='registration_page.html'">
+                Register
+            </button>
+
+        </div>
+
+    </nav>
+
+
+    <!-- Login Form -->
+
+    <section class="login-section">
+
+        <div class="login-container">
+
+            <h1>
+                Welcome to Event<span>Go</span>
+            </h1>
+
+            <p class="subtitle">
+                Login to continue booking your favorite events.
+            </p>
+
+
+            <form method="post" action="index.html">
+
+                <div class="form-group">
+
+                    <label for="email">
+                        E-mail ID
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        required>
+
+                </div>
+
+
+                <div class="forgot-password">
+
+                    <a href="#">
+                        Forgot Password?
+                    </a>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="login-submit">
+                    Login
+                </button>
+
+
+                <p class="register-text">
+
+                    Don't have an account?
+
+                    <a href="registration page.html">
+                        Register here
+                    </a>
+
+                </p>
+
+            </form>
+
+        </div>
+
+    </section>
+
+</body>
+</html>
+

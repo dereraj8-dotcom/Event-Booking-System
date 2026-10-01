@@ -1,3 +1,161 @@
+ // const eventsGrid = document.getElementById("eventsGrid");
+        // const cards = Array.from(
+        //     eventsGrid.querySelectorAll(".event-card")
+        // );
+
+        // const searchInput = document.getElementById("searchInput");
+        // const locationInput = document.getElementById("locationInput");
+        // const dateInput = document.getElementById("dateInput");
+        // const categorySelect = document.getElementById("categorySelect");
+        // const sortSelect = document.getElementById("sortSelect");
+        // const eventHeading = document.getElementById("eventHeading");
+
+        // let selectedCategory = "All";
+
+        // function filterEvents() {
+        //     const search = searchInput.value.trim().toLowerCase();
+        //     const location = locationInput.value.trim().toLowerCase();
+        //     const date = dateInput.value;
+        //     const category = categorySelect.value;
+
+        //     const matchingCards = cards.filter(card => {
+        //         const name = card.querySelector("h3").textContent.toLowerCase();
+        //         const eventLocation = card.dataset.location.toLowerCase();
+        //         const eventDate = card.dataset.date;
+        //         const eventCategory = card.dataset.category;
+
+        //         const matchesSearch =
+        //             name.includes(search) ||
+        //             eventCategory.toLowerCase().includes(search);
+
+        //         const matchesLocation =
+        //             eventLocation.includes(location);
+
+        //         const matchesDate =
+        //             !date || eventDate === date;
+
+        //         const matchesCategory =
+        //             category === "All" ||
+        //             eventCategory === category;
+
+        //         const matchesCategoryButton =
+        //             selectedCategory === "All" ||
+        //             eventCategory === selectedCategory;
+
+        //         return matchesSearch &&
+        //             matchesLocation &&
+        //             matchesDate &&
+        //             matchesCategory &&
+        //             matchesCategoryButton;
+        //     });
+
+        //     matchingCards.sort((a, b) => {
+        //         if (sortSelect.value === "price-low") {
+        //             return Number(a.dataset.price) -
+        //                 Number(b.dataset.price);
+        //         }
+
+        //         if (sortSelect.value === "price-high") {
+        //             return Number(b.dataset.price) -
+        //                 Number(a.dataset.price);
+        //         }
+
+        //         if (sortSelect.value === "name") {
+        //             return a.querySelector("h3").textContent.localeCompare(
+        //                 b.querySelector("h3").textContent
+        //             );
+        //         }
+
+        //         return 0;
+        //     });
+
+        //     cards.forEach(card => {
+        //         card.style.display = "none";
+        //     });
+
+        //     matchingCards.forEach(card => {
+        //         card.style.display = "";
+        //         eventsGrid.appendChild(card);
+        //     });
+
+        //     let message = eventsGrid.querySelector(".no-results");
+
+        //     if (message) {
+        //         message.remove();
+        //     }
+
+        //     if (matchingCards.length === 0) {
+        //         message = document.createElement("p");
+        //         message.className = "no-results";
+        //         message.textContent =
+        //             "No events found. Try changing your search or filters.";
+        //         eventsGrid.appendChild(message);
+        //     }
+
+        //     eventHeading.textContent =
+        //         `${category === "All" ? selectedCategory : category} Events (${matchingCards.length})`;
+        // }
+
+        // document.getElementById("searchForm").addEventListener(
+        //     "submit",
+        //     function (event) {
+        //         event.preventDefault();
+        //         filterEvents();
+        //     }
+        // );
+
+        // sortSelect.addEventListener("change", filterEvents);
+
+        // document.querySelectorAll(".category-btn").forEach(button => {
+        //     button.addEventListener("click", function () {
+        //         selectedCategory = this.dataset.category;
+
+        //         document.querySelectorAll(".category-btn").forEach(btn => {
+        //             btn.classList.remove("active");
+        //         });
+
+        //         this.classList.add("active");
+
+        //         categorySelect.value = "All";
+        //         filterEvents();
+        //     });
+        // });
+
+        // // Booking demo
+        // document.querySelectorAll(".book-btn").forEach(button => {
+        //     button.addEventListener("click", function () {
+        //         const eventName = this.dataset.event;
+
+        //         const confirmed = confirm(
+        //             `Would you like to book "${eventName}"?`
+        //         );
+
+        //         if (confirmed) {
+        //             alert(
+        //                 `You selected ${eventName}. Connect a booking page or backend to complete your reservation.`
+        //             );
+        //         }
+        //     });
+        // });
+
+        // // Newsletter demo
+        // document.getElementById("newsletterForm").addEventListener(
+        //     "submit",
+        //     function (event) {
+        //         event.preventDefault();
+
+        //         const email = document.getElementById("emailInput").value;
+
+        //         alert(
+        //             `Thank you! Newsletter signup demo completed for ${email}.`
+        //         );
+
+        //         this.reset();
+        //     }
+        // );
+
+        // filterEvents(); 
+ 
  const eventList = [
                 {
                         id :101,
