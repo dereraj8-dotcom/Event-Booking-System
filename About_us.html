@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EventGo - About Us</title>
+
+    <style>
+        :root {
+            --pink: #e93691;
+            --pink-dark: #d92b82;
+            --ink: #252936;
+            --muted: #53647d;
+            --pale: #fff1f8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            color: var(--ink);
+            background: white;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .container {
+            width: min(1180px, 92%);
+            margin: auto;
+        }
+
+        .navbar {
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            background: white;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--ink);
+            font-size: 27px;
+            font-weight: 750;
+            white-space: nowrap;
+        }
+
+        .brand-mark {
+            width: 50px;
+            height: 50px;
+            border: 2px solid #7654d6;
+            color: #7654d6;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .brand span span {
+            color: #d92b82;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--ink);
+            font-size: 13px;
+            padding: 25px 0 20px;
+            display: block;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #7551d1;
+        }
+
+        .nav-links a.active {
+            border-bottom: 2px solid #7551d1;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 9px;
+            white-space: nowrap;
+        }
+
+        .btn {
+            display: inline-block;
+            border: 1px solid #7551d1;
+            border-radius: 22px;
+            padding: 10px 22px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-outline {
+            color: #7551d1;
+            background: white;
+        }
+
+        .btn-pink {
+            color: white;
+            background: #7551d1;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .hero {
+            min-height: 220px;
+            position: relative;
+            overflow: hidden;
+            background: #fdeaf4;
+        }
+
+        .hero-photo {
+            position: absolute;
+            inset: 0 0 0 38%;
+            background:
+                linear-gradient(
+                    90deg,
+                    #fdeaf4 0%,
+                    rgba(253, 234, 244, 0.2) 35%,
+                    transparent 100%
+                ),
+                url("https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=1600&q=85")
+                center / cover no-repeat;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 55%;
+            height: 180%;
+            left: -8%;
+            top: -40%;
+            background: linear-gradient(
+                120deg,
+                #fff0f7 20%,
+                rgba(255, 240, 247, 0.96) 72%,
+                rgba(255, 240, 247, 0.1)
+            );
+            border-radius: 0 0 65% 0;
+            transform: skewX(-12deg);
+        }
+
+        .hero-content {
+            position: relative;
+            padding: 35px 0;
+        }
+
+        .hero h1 {
+            font-size: 40px;
+            margin-bottom: 7px;
+        }
+
+        .hero h1 span {
+            color: #7551d1;
+        }
+
+        .tagline {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 13px;
+        }
+
+        .hero-content > p:last-child {
+            color: #46546b;
+            font-size: 13px;
+            line-height: 1.6;
+            max-width: 390px;
+        }
+
+        .story {
+            padding: 35px 0;
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 45px;
+            align-items: center;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .story-image {
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .story-image::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 25px;
+            width: 65px;
+            height: 95px;
+            background: #fbd5e9;
+            border-radius: 10px;
+        }
+
+        .story-image img {
+            position: relative;
+            display: block;
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .eyebrow {
+            width: 38px;
+            height: 3px;
+            border-radius: 5px;
+            background: #7551d1;
+            margin-bottom: 8px;
+        }
+
+        .story h2,
+        .section-heading {
+            font-size: 28px;
+            margin-bottom: 7px;
+        }
+
+        .story h2 span,
+        .section-heading span {
+            color: #7551d1;
+        }
+
+        .story p {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.55;
+            margin: 8px 0;
+        }
+
+        .mission {
+            background: linear-gradient(
+                110deg,
+                #fff4fa,
+                #fff8fc
+            );
+            border-radius: 14px;
+            padding: 25px 35px;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .center .eyebrow {
+            margin: 0 auto 8px;
+        }
+
+        .section-subtitle {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.6;
+            margin: 6px auto 22px;
+            max-width: 600px;
+        }
+
+        .mission-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .mission-card {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            background: white;
+            border: 1px solid #f8d8e9;
+            border-radius: 12px;
+            padding: 20px;
+            min-height: 120px;
+        }
+
+        .round-icon {
+            flex: 0 0 62px;
+            width: 62px;
+            height: 62px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            color: white;
+            background: #7551d1;
+            font-size: 28px;
+        }
+
+        .mission-card h3 {
+            font-size: 17px;
+            margin-bottom: 7px;
+        }
+
+        .mission-card h3 span,
+        .feature h3 span {
+            color: #7551d1;
+        }
+
+        .mission-card p {
+            color: #7551d1;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .features {
+            padding: 30px 0;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 10px;
+        }
+
+        .feature .round-icon {
+            background: #fde7f2;
+            color: #7551d1;
+        }
+
+        .feature h3 {
+            font-size: 14px;
+            margin-bottom: 7px;
+        }
+
+        .feature p {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .cta {
+            text-align: center;
+            color: white;
+            padding: 25px 15px;
+            border-radius: 12px;
+            background:
+                linear-gradient(
+                    #7551d1,
+                    #7551d1
+                ),
+                url("https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=1200&q=80")
+                center / cover;
+            margin-bottom: 5px;
+        }
+
+        .cta h2 {
+            font-size: 23px;
+            margin-bottom: 8px;
+        }
+
+        .cta p {
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+
+        .cta .btn {
+            background: white;
+            color: #7551d1;
+            border: none;
+        }
+
+        footer {
+            background: #102441;
+            color: white;
+            padding: 30px 4% 12px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 35px;
+            padding-bottom: 25px;
+        }
+
+        .footer-logo {
+            font-size: 26px;
+            font-weight: 750;
+            margin-bottom: 10px;
+        }
+
+        .footer-logo span {
+            color: var(--pink);
+        }
+
+        .footer-desc {
+            color: #c4d0df;
+            line-height: 1.7;
+        }
+
+        footer h4 {
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .footer-links a,
+        .footer-contact p {
+            color: #c4d0df;
+            font-size: 13px;
+        }
+
+        .footer-links a:hover {
+            color: #ff76bd;
+        }
+
+        .footer-contact p {
+            margin-bottom: 10px;
+        }
+
+        .copyright {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            flex-wrap: wrap;
+            padding-top: 14px;
+            border-top: 1px solid #344760;
+            color: #c4d0df;
+            font-size: 12px;
+        }
+
+        @media (max-width: 1000px) {
+            .navbar {
+                flex-wrap: wrap;
+                padding: 12px 0;
+            }
+
+            .nav-links {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+
+            .nav-links a {
+                padding: 8px 0;
+            }
+
+            .mission-grid {
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .hero-photo {
+                left: 15%;
+                opacity: 0.45;
+            }
+
+            .hero::before {
+                width: 85%;
+            }
+
+            .hero h1 {
+                font-size: 34px;
+            }
+
+            .story-grid,
+            .mission-grid,
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .story-grid {
+                gap: 25px;
+            }
+
+            .story-image img {
+                height: 230px;
+            }
+
+            .mission {
+                padding: 25px 15px;
+            }
+
+            .feature-grid {
+                gap: 12px;
+            }
+
+            .feature {
+                max-width: 450px;
+                margin: auto;
+                width: 100%;
+            }
+
+            .brand {
+                font-size: 23px;
+            }
+
+            .nav-links {
+                gap: 13px;
+            }
+
+            .nav-links a {
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .nav-actions .btn {
+                padding: 8px 12px;
+            }
+
+            .mission-card {
+                padding: 15px;
+                gap: 13px;
+            }
+
+            .round-icon {
+                flex-basis: 52px;
+                width: 52px;
+                height: 52px;
+                font-size: 24px;
+            }
+
+            .hero-content {
+                padding: 28px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="container">
+        <nav class="navbar">
+
+            <!-- EventGo logo added here -->
+            <a class="brand" href="index.html">
+                <img
+                    class="brand-mark"
+                    src="logo_event.jpeg"
+                    alt="EventGo Logo"
+                    
+                >
+
+                <span style="color: var(--ink)">
+                    Event<span>Go</span>
+                </span>
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="Events.html">Events</a></li>
+                <li><a href="event.html">Categories</a></li>
+                <li><a href="my-bookings.html">My Bookings</a></li>
+                <li><a href="about.html" class="active">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <a class="btn btn-outline" href="login_page.html">Login</a>
+                <a class="btn btn-pink" href="registration_page.html">Register</a>
+            </div>
+
+        </nav>
+    </header>
+
+    <main>
+
+        <section class="hero">
+            <div class="hero-photo"></div>
+
+            <div class="container hero-content">
+                <h1>About <span>Us</span></h1>
+
+                <p class="tagline">
+                    Your gateway to unforgettable experiences.
+                </p>
+
+                <p>
+                    At <strong>EventGo</strong>, we believe that
+                    great experiences bring people together.
+                    We make it simple for you to discover, book,
+                    and enjoy amazing events.
+                </p>
+            </div>
+        </section>
+
+        <section class="story container">
+            <div class="story-grid">
+
+                <div class="story-image">
+                    <img
+                        src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1000&q=85"
+                        alt="Audience enjoying a live music event">
+                </div>
+
+                <div class="story">
+                    <div class="eyebrow"></div>
+
+                    <h2>Our <span>Story</span></h2>
+
+                    <p>
+                        EventGo is an event-booking platform designed
+                        to help people discover and explore events
+                        in one convenient place.
+                    </p>
+
+                    <p>
+                        From live music concerts and cultural
+                        festivals to workshops and special occasions,
+                        our goal is to make finding your next
+                        experience simple and convenient.
+                    </p>
+
+                    <p>
+                        We believe that great experiences create
+                        lasting memories. EventGo brings event
+                        discovery and booking together so you can
+                        spend less time searching and more time
+                        enjoying the moments that matter.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="mission container">
+
+            <div class="center">
+                <div class="eyebrow"></div>
+
+                <h2 class="section-heading">
+                    Our <span>Mission &amp; Vision</span>
+                </h2>
+
+                <p class="section-subtitle">
+                    Making event discovery easier and helping
+                    people connect through experiences they love.
+                </p>
+            </div>
+
+            <div class="mission-grid">
+
+                <article class="mission-card">
+                    <div class="round-icon">◎</div>
+
+                    <div>
+                        <h3>Our <span>Mission</span></h3>
+
+                        <p>
+                            To provide a simple and user-friendly
+                            platform where people can discover events,
+                            explore available options, and conveniently
+                            plan their experiences.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="mission-card">
+                    <div class="round-icon">★</div>
+
+                    <div>
+                        <h3>Our <span>Vision</span></h3>
+
+                        <p>
+                            To make event discovery accessible to
+                            everyone and help people create meaningful
+                            memories through music, entertainment,
+                            learning, and community experiences.
+                        </p>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <section class="features container">
+
+            <div class="center">
+                <div class="eyebrow"></div>
+
+                <h2 class="section-heading">
+                    Why Choose <span>EventGo?</span>
+                </h2>
+
+                <p class="section-subtitle">
+                    Everything you need to find your next
+                    memorable experience in one place.
+                </p>
+            </div>
+
+            <div class="feature-grid">
+
+                <article class="feature">
+                    <div class="round-icon">▦</div>
+
+                    <div>
+                        <h3>Discover <span>Events</span></h3>
+
+                        <p>
+                            Explore different events, from live
+                            concerts and festivals to workshops
+                            and entertainment.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="feature">
+                    <div class="round-icon">🎟</div>
+
+                    <div>
+                        <h3>Easy <span>Booking</span></h3>
+
+                        <p>
+                            Find event details, check ticket prices,
+                            and make planning your next outing easier.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="feature">
+                    <div class="round-icon">♥</div>
+
+                    <div>
+                        <h3>Memorable <span>Experiences</span></h3>
+
+                        <p>
+                            Discover activities that match your
+                            interests and make more time for
+                            experiences you love.
+                        </p>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <section class="cta container">
+            <h2>Your Next Experience Starts Here!</h2>
+
+            <p>
+                Explore exciting events and find something
+                special to look forward to.
+            </p>
+
+            <a class="btn" href="Events.html">
+                Explore Events &rarr;
+            </a>
+        </section>
+
+    </main>
+
+     <footer id="footer">
+        <div class="footer-grid">
+
+            <div>
+                <div class="footer-logo">▦ Event<span>Go</span></div>
+                <p class="footer-desc">
+                    Your Gateway to Unforgettable Events.
+                    Discover experiences, connect with people
+                    and create memories.
+                </p>
+            </div>
+
+            <div>
+                <h4>Quick Links</h4>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="events.html">Events</a>
+                    <a href="#categories">Categories</a>
+                    <a href="my-bookings.html">My Bookings</a>
+                    <a href="#footer">About Us</a>
+                </div>
+            </div>
+
+            <div>
+                <h4>Follow Us</h4>
+                <div class="footer-links">
+                    <a href="https://www.facebook.com/">Facebook</a>
+                    <a href="https://www.instagram.com/">Instagram</a>
+                    <a href="https://www.youtube.com/">YouTube</a>
+                    <a href="https://www.linkedin.com/">LinkedIn</a>
+                </div>
+            </div>
+
+            <div>
+                <h4>Contact Us</h4>
+                <div class="footer-contact">
+                    <p>✉ support@eventgo.com</p>
+                    <p>☎ +91 98765 43210</p>
+                    <p>📍 Mumbai, India</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="copyright">
+            <p>© 2026 EventGo. All rights reserved.</p>
+            <p>Terms & Conditions &nbsp; | &nbsp; Privacy Policy</p>
+        </div>
+    </footer>
+
+</body>
+</html>
