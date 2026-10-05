@@ -7,6 +7,7 @@
 
     <title>EventGo - Explore Events</title>
     <script src="event.js" defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
     <style>
         * {
@@ -72,18 +73,52 @@
         }
 
         .nav-links {
+            flex: 1;
             display: flex;
-            gap: 28px;
+            align-items: center;
+            justify-content: center;
         }
 
-        .nav-links a {
+        .nav-links ul {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 25px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links ul li {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links ul li a {
+            display: block;
             text-decoration: none;
             color: #333;
             font-size: 14px;
+            white-space: nowrap;
+            padding: 8px 2px;
+            transition: 0.3s ease;
         }
 
-        .nav-links a:first-child {
+        .nav-links ul li:first-child a {
             color: #e84c9a;
+        }
+
+        .nav-links ul li a:hover {
+            color: #e84c9a;
+        }
+         .nav-links a:hover,
+        .nav-links a.active {
+            color: #7551d1;
+        }
+
+        .nav-links a.active {
+            border-bottom: 2px solid #7551d1;
         }
 
         .nav-buttons {
@@ -484,8 +519,8 @@
                 flex-wrap: wrap;
             }
 
-            .nav-links {
-                gap: 17px;
+            .nav-links ul {
+                gap: 15px;
             }
 
             .search-box {
@@ -522,7 +557,10 @@
                 order: 3;
                 width: 100%;
                 overflow-x: auto;
-                gap: 22px;
+            }
+
+            .nav-links ul {
+                gap: 15px;
             }
 
             .nav-buttons {
@@ -646,12 +684,20 @@
         </div>
 
         <div class="nav-links">
-            <a href="index.html">Home</a>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="Events.html">Event</a></li>
+                <li><a href="">Categories</a></li>
+                <li id="bookModal" data-bs-toggle="modal" data-bs-target="#exampleModal"><a>My Bookings</a></li>
+                <li><a href="About_us.html">About Us</a></li>
+                <li><a href="contacts.html">Contact</a></li>
+            </ul>
+            <!-- <a href="index.html">Home</a>
             <a href="Events.html">Events</a>
             <a href="#">Categories</a>
-            <a href="#">My Bookings</a>
+            <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">My Bookings</a>
             <a href="About_us.html">About Us</a>
-            <a href="contacts.html">Contact</a>
+            <a href="contacts.html">Contact</a> -->
         </div>
 
         <div class="nav-buttons">
@@ -966,6 +1012,23 @@
             </form>
         </div>
     </section>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Your Bookings</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div id="ticket" class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
 
     <!-- FOOTER -->
 
@@ -1018,6 +1081,7 @@
             <p>Terms & Conditions &nbsp; | &nbsp; Privacy Policy</p>
         </div>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 
 </body>
 </html>

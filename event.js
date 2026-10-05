@@ -224,6 +224,9 @@
         ];
 
 
+        const entry = [];
+
+
          eventList.forEach(function(event){
                 const card = document.createElement("div");
         card.classList.add("event-card");
@@ -239,7 +242,7 @@
         section2.classList.add("event-info");
 
         const title = document.createElement("h3");
-        title.textContent.add = event.name;
+        title.textContent = event.name;
 
          const eventdetail = document.createElement("p");
          eventdetail.textContent = event.description;
@@ -259,6 +262,31 @@
          const book = document.createElement("button");
          book.textContent = "Book";
         book.classList.add("book-btn");
+        book.addEventListener("click",addToBooking);
+        function addToBooking(){
+                const existingBooking = entry.find(function (perf){
+                        return perf.id === event.id;
+
+                });
+                if(existingBooking){
+                        existingBooking.quantity++;
+                }
+                else{
+                        const pass = {
+                                id : event.id,
+                                name : event.name,
+                                description : event.description,
+                                date : event.date,
+                                price : event.price,
+                                quantity :1
+
+                        };
+                        entry.push(pass);
+
+                }
+                console.log(entry);
+
+        }
 
 
         section2.appendChild(title);
@@ -276,4 +304,36 @@
         const Event = document.getElementById("eventsGrid");
         Event.appendChild(card);
         });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // const bookLink = document.getElementById("bookModal");
+        // bookLink.addEventListener("click", );
+
+
+        // function showBooking(){
+        //         const bookTable = document.getElementById("ticket");
+        //         tableCode+=``
+        // }
 

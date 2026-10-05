@@ -47,18 +47,43 @@ nav {
 }
 
 .nav-links {
+    flex: 1;
     display: flex;
-    gap: 20px;
+    align-items: center;
+    justify-content: center;
 }
 
-.nav-links a {
+.nav-links ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links ul li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links ul li a {
+    display: block;
     text-decoration: none;
     color: #333;
     font-size: 14px;
     white-space: nowrap;
+    padding: 8px 2px;
+    transition: 0.3s ease;
 }
 
-.nav-links a:first-child {
+.nav-links ul li:first-child a {
+    color: #e84c9a;
+}
+
+.nav-links ul li a:hover {
     color: #e84c9a;
 }
 
@@ -437,8 +462,8 @@ nav {
         flex-wrap: wrap;
     }
 
-    .nav-links {
-        gap: 12px;
+    .nav-links ul {
+        gap: 15px;
     }
 
     .hero {

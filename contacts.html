@@ -64,21 +64,45 @@
         }
 
         .nav-links {
+            flex: 1;
             display: flex;
             align-items: center;
-            gap: 22px;
-            flex-wrap: wrap;
+            justify-content: center;
         }
 
-        .nav-links a {
+        .nav-links ul {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 25px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links ul li {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links ul li a {
+            display: block;
+            text-decoration: none;
             color: #454154;
             font-size: 14px;
-            transition: 0.3s;
+            white-space: nowrap;
+            padding: 8px 2px;
+            transition: 0.3s ease;
         }
 
-        .nav-links a:hover,
-        .nav-links a.active {
+        .nav-links ul li a:hover,
+        .nav-links ul li a.active {
             color: #7551d1;
+        }
+
+        .nav-links a.active {
+            border-bottom: 2px solid #7551d1;
         }
 
         .nav-buttons {
@@ -393,8 +417,8 @@
                 justify-content: center;
             }
 
-            .nav-links {
-                justify-content: center;
+            .nav-links ul {
+                gap: 15px;
             }
 
             .footer-content {
@@ -437,7 +461,7 @@
         }
 
         @media (max-width: 450px) {
-            .nav-links {
+            .nav-links ul {
                 gap: 12px;
             }
 
@@ -466,12 +490,14 @@
         </a>
 
         <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="Events.html">Events</a>
-            <a href="index.html#categories">Categories</a>
-            <a href="index.html#newsletter">My Bookings</a>
-            <a href="About_us.html">About Us</a>
-            <a href="Contact.html" class="active">Contact</a>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="Events.html">Events</a></li>
+                <li><a href="index.html#categories">Categories</a></li>
+                <li><a href="index.html#newsletter">My Bookings</a></li>
+                <li><a href="About_us.html">About Us</a></li>
+                <li><a href="Contact.html" class="active">Contact</a></li>
+            </ul>
         </div>
 
         <div class="nav-buttons">
