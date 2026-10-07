@@ -6,144 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>EventGo - Explore Events</title>
-    <script src="event.js" defer></script>
+    <link rel="stylesheet" href="common.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="event.js" defer></script>
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "Segoe UI", Arial, sans-serif;
-        }
-
-        :root {
-            --pink: #e91e83;
-            --dark: #142d4e;
-            --muted: #637083;
-            --border: #e1e6ed;
-            --light: #f5f7fa;
-        }
-
-        body {
-            color: var(--dark);
-            background: #fff;
-            font-size: 14px;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        button, input, select {
-            font: inherit;
-        }
-
-        button {
-            cursor: pointer;
-        }
-
-
-        nav {
-            height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 7%;
-            background: white;
-        }
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 20px;
-            font-weight: bold;
-            color: #333;
-        }
-        .logo-icon img {
-            width: 50px;
-            height: 50px;
-            border: 2px solid #7654d6;
-            color: #7654d6;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .nav-links {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .nav-links ul {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 25px;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        .nav-links ul li {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        .nav-links ul li a {
-            display: block;
-            text-decoration: none;
-            color: #333;
-            font-size: 14px;
-            white-space: nowrap;
-            padding: 8px 2px;
-            transition: 0.3s ease;
-        }
-
-        .nav-links ul li:first-child a {
-            color: #e84c9a;
-        }
-
-        .nav-links ul li a:hover {
-            color: #e84c9a;
-        }
-         .nav-links a:hover,
-        .nav-links a.active {
-            color: #7551d1;
-        }
-
-        .nav-links a.active {
-            border-bottom: 2px solid #7551d1;
-        }
-
-        .nav-buttons {
-            display: flex;
-            gap: 12px;
-        }
-
-        .login-btn,
-        .register-btn {
-            padding: 10px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 500;
-        }
-
-        .login-btn {
-            background: white;
-            border: 1px solid #ddd;
-        }
-
-        .register-btn {
-            border: none;
-            background: #7551d1;
-            color: white;
-        }
+        /* Events Page Specific Styles */
 
         /* HERO */
 
@@ -219,8 +87,12 @@
             border: none;
             border-radius: 6px;
             padding: 0 24px;
-            background: #7551d1;
+            background: var(--primary);
             color: white;
+        }
+
+        .search-btn:hover {
+            background: var(--primary-hover);
         }
 
         /* MAIN */
@@ -253,7 +125,7 @@
 
         .category-btn:hover,
         .category-btn.active {
-            background: #7551d1;
+            background: var(--primary);
             color: white;
         }
 
@@ -347,7 +219,7 @@
 
         .price {
             display: block;
-            color: #7551d1;
+            color: var(--primary);
             font-weight: 750;
             font-size: 17px;
             margin-bottom: 8px;
@@ -359,11 +231,11 @@
             border: none;
             border-radius: 5px;
             color: white;
-            background: #7551d1;
+            background: var(--primary);
         }
 
         .book-btn:hover {
-            background: #c91870;
+            background: var(--primary-hover);
         }
 
         .no-results {
@@ -395,8 +267,8 @@
 
         .page-btn.active,
         .page-btn:hover {
-            background: #7551d1;
-            border-color: #7551d1;
+            background: var(--primary);
+            border-color: var(--primary);
             color: white;
         }
 
@@ -440,89 +312,19 @@
 
         .newsletter-form button {
             padding: 10px 20px;
-            background: #7551d1;
+            background: var(--primary);
             color: white;
             border: none;
             border-radius: 5px;
         }
 
-        /* FOOTER */
-
-        footer {
-            background: #102441;
-            color: white;
-            padding: 30px 4% 12px;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr 1fr 1fr;
-            gap: 35px;
-            padding-bottom: 25px;
-        }
-
-        .footer-logo {
-            font-size: 26px;
-            font-weight: 750;
-            margin-bottom: 10px;
-        }
-
-        .footer-logo span {
-            color: var(--pink);
-        }
-
-        .footer-desc {
-            color: #c4d0df;
-            line-height: 1.7;
-        }
-
-        footer h4 {
-            font-size: 14px;
-            margin-bottom: 12px;
-        }
-
-        .footer-links {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .footer-links a,
-        .footer-contact p {
-            color: #c4d0df;
-            font-size: 13px;
-        }
-
-        .footer-links a:hover {
-            color: #ff76bd;
-        }
-
-        .footer-contact p {
-            margin-bottom: 10px;
-        }
-
-        .copyright {
-            display: flex;
-            justify-content: space-between;
-            gap: 15px;
-            flex-wrap: wrap;
-            padding-top: 14px;
-            border-top: 1px solid #344760;
-            color: #c4d0df;
-            font-size: 12px;
+        .newsletter-form button:hover {
+            background: var(--primary-hover);
         }
 
         /* RESPONSIVE */
 
         @media (max-width: 1050px) {
-            nav {
-                flex-wrap: wrap;
-            }
-
-            .nav-links ul {
-                gap: 15px;
-            }
-
             .search-box {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
@@ -545,28 +347,6 @@
         }
 
         @media (max-width: 700px) {
-            nav {
-                gap: 12px;
-            }
-
-            .logo {
-                font-size: 24px;
-            }
-
-            .nav-links {
-                order: 3;
-                width: 100%;
-                overflow-x: auto;
-            }
-
-            .nav-links ul {
-                gap: 15px;
-            }
-
-            .nav-buttons {
-                margin-left: auto;
-            }
-
             .hero {
                 padding: 34px 5%;
                 background-position: center;
@@ -636,11 +416,6 @@
                 max-width: 110px;
                 padding: 8px 5px;
             }
-
-            .footer-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-                gap: 25px;
-            }
         }
 
         @media (max-width: 380px) {
@@ -652,10 +427,6 @@
                 height: 165px;
             }
 
-            .nav-buttons .btn {
-                padding: 8px 10px;
-            }
-
             .section-header {
                 align-items: flex-start;
                 flex-direction: column;
@@ -664,10 +435,6 @@
             .newsletter-form {
                 flex-direction: column;
             }
-
-            .footer-grid {
-                grid-template-columns: 1fr;
-            }
         }
     </style>
 </head>
@@ -675,32 +442,30 @@
 <body>
 
     <nav>
-
         <div class="logo">
             <div class="logo-icon">
-                <img src="logo_event.jpeg">
+                <img src="logo_event.jpeg" alt="EventGo Logo">
             </div>
-            Event<span style="color:#e84c9a;">Go</span>
+            Event<span class="logo-go">Go</span>
         </div>
 
         <div class="nav-links">
             <ul>
                 <li><a href="index.html">Home</a></li>
-                <li><a href="Events.html">Event</a></li>
-                <li><a href="">Categories</a></li>
-                <li id="bookModal" data-bs-toggle="modal" data-bs-target="#exampleModal" class="nav-item position-relative"><a>My Bookings
+                <li><a href="Events.html" class="active">Events</a></li>
+                <li><a href="index.html#categories">Categories</a></li>
+                <li id="bookModal" data-bs-toggle="modal" data-bs-target="#exampleModal" class="nav-item position-relative"><a href="#">My Bookings
                     <span
                   id="qty"
                   class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
                 >
                   0
-                  <!-- <span class="visually-hidden">unread messages</span> -->
                 </span>
                 </a></li>
                 <li><a href="About_us.html">About Us</a></li>
                 <li><a href="contacts.html">Contact</a></li>
             </ul>
-    
+
         </div>
 
         <div class="nav-buttons">
@@ -1034,7 +799,6 @@
 </div>
 
     <!-- FOOTER -->
-
     <footer id="footer">
         <div class="footer-grid">
 
@@ -1051,10 +815,10 @@
                 <h4>Quick Links</h4>
                 <div class="footer-links">
                     <a href="index.html">Home</a>
-                    <a href="events.html">Events</a>
-                    <a href="#categories">Categories</a>
-                    <a href="my-bookings.html">My Bookings</a>
-                    <a href="#footer">About Us</a>
+                    <a href="Events.html">Events</a>
+                    <a href="index.html#categories">Categories</a>
+                    <a href="#">My Bookings</a>
+                    <a href="About_us.html">About Us</a>
                 </div>
             </div>
 

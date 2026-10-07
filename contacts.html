@@ -6,15 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Contact Us | EventGo</title>
+    <link rel="stylesheet" href="common.css">
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-
         html {
             scroll-behavior: smooth;
         }
@@ -22,121 +16,10 @@
         body {
             background: #faf9ff;
             color: #252238;
-            line-height: 1.6;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
         }
 
         .pink {
-            color: #e84c9a;
-        }
-
-        /* Navbar */
-        nav {
-            min-height: 75px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-            padding: 12px 7%;
-            background: white;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-            flex-wrap: wrap;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 25px;
-            font-weight: bold;
-            white-space: nowrap;
-        }
-
-        .logo img {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .nav-links {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .nav-links ul {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 25px;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        .nav-links ul li {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        .nav-links ul li a {
-            display: block;
-            text-decoration: none;
-            color: #454154;
-            font-size: 14px;
-            white-space: nowrap;
-            padding: 8px 2px;
-            transition: 0.3s ease;
-        }
-
-        .nav-links ul li a:hover,
-        .nav-links ul li a.active {
-            color: #7551d1;
-        }
-
-        .nav-links a.active {
-            border-bottom: 2px solid #7551d1;
-        }
-
-        .nav-buttons {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .login-btn,
-        .register-btn {
-            padding: 9px 17px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            transition: 0.3s;
-        }
-
-        .login-btn {
-            color: #7551d1;
-            border: 1px solid #7551d1;
-        }
-
-        .login-btn:hover {
-            background: #f1edff;
-        }
-
-        .register-btn {
-            background: #7551d1;
-            color: white;
-            border: 1px solid #7551d1;
-        }
-
-        .register-btn:hover {
-            background: #6240bc;
+            color: var(--pink);
         }
 
         /* Hero Section */
@@ -334,7 +217,7 @@
         }
 
         .submit-btn:hover {
-            background: #6240bc;
+            background: var(--primary-dark);
             transform: translateY(-2px);
         }
 
@@ -348,92 +231,17 @@
             font-size: 14px;
         }
 
-        /* Footer */
-        footer {
-            background: #211b35;
-            color: white;
-            padding: 50px 7% 0;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: auto;
-            display: grid;
-            grid-template-columns: 1.4fr 1fr 1fr 1fr;
-            gap: 35px;
-            padding-bottom: 35px;
-        }
-
-        .footer-logo {
-            display: inline-flex;
-            margin-bottom: 15px;
-        }
-
-        .footer-brand p {
-            max-width: 300px;
-            color: #c3bdd3;
-            font-size: 14px;
-        }
-
-        .footer-links {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 10px;
-        }
-
-        .footer-links h3 {
-            font-size: 16px;
-            margin-bottom: 8px;
-        }
-
-        .footer-links a,
-        .footer-links p {
-            color: #c3bdd3;
-            font-size: 13px;
-            overflow-wrap: anywhere;
-        }
-
-        .footer-links a:hover {
-            color: #e84c9a;
-        }
-
-        .footer-bottom {
-            max-width: 1200px;
-            margin: auto;
-            padding: 20px 0;
-            border-top: 1px solid #403850;
-            display: flex;
-            justify-content: space-between;
-            gap: 15px;
-            flex-wrap: wrap;
-            color: #c3bdd3;
-            font-size: 12px;
-        }
-
         /* Responsive */
         @media (max-width: 1050px) {
-            nav {
-                justify-content: center;
-            }
-
-            .nav-links ul {
-                gap: 15px;
-            }
-
-            .footer-content {
-                grid-template-columns: repeat(2, 1fr);
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 35px;
             }
         }
 
         @media (max-width: 700px) {
             .contact-section {
                 padding: 45px 5%;
-            }
-
-            .contact-container {
-                grid-template-columns: 1fr;
-                gap: 35px;
             }
 
             .contact-form-box {
@@ -449,33 +257,6 @@
                 min-height: 240px;
                 padding: 45px 20px;
             }
-
-            footer {
-                padding: 40px 5% 0;
-            }
-
-            .footer-bottom {
-                flex-direction: column;
-                text-align: center;
-            }
-        }
-
-        @media (max-width: 450px) {
-            .nav-links ul {
-                gap: 12px;
-            }
-
-            .nav-links a {
-                font-size: 13px;
-            }
-
-            .nav-buttons {
-                justify-content: center;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
         }
     </style>
 </head>
@@ -484,25 +265,27 @@
 
     <!-- Navbar -->
     <nav>
-        <a href="index.html" class="logo">
-            <img src="logo_event.jpeg" alt="EventGo Logo">
-            <span>Event<span class="pink">Go</span></span>
-        </a>
+        <div class="logo">
+            <div class="logo-icon">
+                <img src="logo_event.jpeg" alt="EventGo Logo">
+            </div>
+            Event<span class="logo-go">Go</span>
+        </div>
 
         <div class="nav-links">
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="Events.html">Events</a></li>
                 <li><a href="index.html#categories">Categories</a></li>
-                <li><a href="index.html#newsletter">My Bookings</a></li>
+                <li><a href="#">My Bookings</a></li>
                 <li><a href="About_us.html">About Us</a></li>
-                <li><a href="Contact.html" class="active">Contact</a></li>
+                <li><a href="contacts.html" class="active">Contact</a></li>
             </ul>
         </div>
 
         <div class="nav-buttons">
-            <a href="login_page.html" class="login-btn">Login</a>
-            <a href="registration_page.html" class="register-btn">Register</a>
+            <button onclick="window.location.href='login_page.html'" class="login-btn">Login</button>
+            <button onclick="window.location.href='registration_page.html'" class="register-btn">Register</button>
         </div>
     </nav>
 
@@ -635,48 +418,53 @@
     </section>
 
     <!-- Footer -->
-    <footer>
-        <div class="footer-content">
+    <footer id="footer">
+        <div class="footer-grid">
 
-            <div class="footer-brand">
-                <a href="index.html" class="logo footer-logo">
-                    <img src="logo_event.jpeg" alt="EventGo Logo">
-                    <span>Event<span class="pink">Go</span></span>
-                </a>
-
-                <p>
-                    Discover events, create memories, and make
-                    every moment unforgettable with EventGo.
+            <div>
+                <div class="footer-logo">▦ Event<span>Go</span></div>
+                <p class="footer-desc">
+                    Your Gateway to Unforgettable Events.
+                    Discover experiences, connect with people
+                    and create memories.
                 </p>
             </div>
 
-            <div class="footer-links">
-                <h3>Quick Links</h3>
-                <a href="index.html">Home</a>
-                <a href="Events.html">Events</a>
-                <a href="About_us.html">About Us</a>
-                <a href="Contact.html">Contact Us</a>
+            <div>
+                <h4>Quick Links</h4>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="Events.html">Events</a>
+                    <a href="index.html#categories">Categories</a>
+                    <a href="#">My Bookings</a>
+                    <a href="About_us.html">About Us</a>
+                </div>
             </div>
 
-            <div class="footer-links">
-                <h3>Support</h3>
-                <a href="Contact.html">Help Center</a>
-                <a href="Contact.html">Booking Support</a>
-                <a href="Contact.html">Payment Queries</a>
+            <div>
+                <h4>Follow Us</h4>
+                <div class="footer-links">
+                    <a href="https://www.facebook.com/">Facebook</a>
+                    <a href="https://www.instagram.com/">Instagram</a>
+                    <a href="https://www.youtube.com/">YouTube</a>
+                    <a href="https://www.linkedin.com/">LinkedIn</a>
+                </div>
             </div>
 
-            <div class="footer-links">
-                <h3>Contact Info</h3>
-                <p>support@eventgo.com</p>
-                <p>+91 98765 43210</p>
-                <p>Mumbai, India</p>
+            <div>
+                <h4>Contact Us</h4>
+                <div class="footer-contact">
+                    <p>✉ support@eventgo.com</p>
+                    <p>☎ +91 98765 43210</p>
+                    <p>📍 Mumbai, India</p>
+                </div>
             </div>
 
         </div>
 
-        <div class="footer-bottom">
+        <div class="copyright">
             <p>© 2026 EventGo. All rights reserved.</p>
-            <p>Made with <span class="pink">♥</span> for event lovers.</p>
+            <p>Terms & Conditions &nbsp; | &nbsp; Privacy Policy</p>
         </div>
     </footer>
 

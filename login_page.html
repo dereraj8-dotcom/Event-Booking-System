@@ -5,101 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>EventGo - Login</title>
+    <link rel="stylesheet" href="common.css">
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-
         body {
             min-height: 100vh;
             background: #f8f8f8;
             display: flex;
             flex-direction: column;
-        }
-
-
-        nav {
-            height: 75px;
-            background: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 50px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo img {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .logo h2 {
-            font-size: 25px;
-            color: #222;
-        }
-
-        .logo span {
-            color: #e84c9a;
-        }
-
-        .nav-links {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        .nav-links li {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #333;
-            font-size: 15px;
-            transition: 0.3s;
-            white-space: nowrap;
-            padding: 8px 2px;
-        }
-
-        .nav-links a:hover {
-            color: #e84c9a;
-        }
-
-        .login-btn {
-            padding: 9px 18px;
-            border: 1px solid #e84c9a;
-            background: #e84c9a;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .register-btn {
-            padding: 9px 18px;
-            border: 1px solid #e84c9a;
-            background: white;
-            color: #e84c9a;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-left: 5px;
         }
 
         /* Login Section */
@@ -116,8 +29,8 @@
             width: 420px;
             background: white;
             padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            box-shadow: var(--shadow-md);
         }
 
         .login-container h1 {
@@ -127,7 +40,7 @@
         }
 
         .login-container h1 span {
-            color: #e84c9a;
+            color: var(--pink);
         }
 
         .subtitle {
@@ -159,18 +72,19 @@
         }
 
         .form-group input:focus {
-            border-color: #e84c9a;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(117, 81, 209, 0.1);
         }
 
         .forgot-password {
-            display: block;
-            text-align: right;
+            display: flex;
+            text-align: center;
             margin-top: -10px;
             margin-bottom: 20px;
         }
 
         .forgot-password a {
-            color: #e84c9a;
+            color: var(--pink);
             text-decoration: none;
             font-size: 13px;
         }
@@ -178,7 +92,7 @@
         .login-submit {
             width: 100%;
             padding: 12px;
-            background: #e84c9a;
+            background: var(--primary);
             color: white;
             border: none;
             border-radius: 6px;
@@ -188,7 +102,7 @@
         }
 
         .login-submit:hover {
-            background: #d63c89;
+            background: var(--pink-dark);
         }
 
         .register-text {
@@ -199,26 +113,13 @@
         }
 
         .register-text a {
-            color: #e84c9a;
+            color: var(--pink);
             text-decoration: none;
             font-weight: bold;
         }
 
         /* Responsive */
-
-        @media (max-width: 800px) {
-
-            nav {
-                padding: 0 20px;
-            }
-
-            .nav-links {
-                display: none;
-            }
-        }
-
         @media (max-width: 500px) {
-
             .login-section {
                 padding: 25px 15px;
             }
@@ -227,15 +128,6 @@
                 width: 100%;
                 padding: 30px 22px;
             }
-
-            .logo h2 {
-                font-size: 21px;
-            }
-
-            .login-btn,
-            .register-btn {
-                padding: 7px 10px;
-            }
         }
     </style>
 </head>
@@ -243,43 +135,28 @@
 <body>
 
     <nav>
-
         <div class="logo">
-
-            <img src="logo_event.jpeg" alt="EventGo Logo">
-
-            <h2>
-                Event<span>Go</span>
-            </h2>
-
+            <div class="logo-icon">
+                <img src="logo_event.jpeg" alt="EventGo Logo">
+            </div>
+            Event<span class="logo-go">Go</span>
         </div>
-
 
         <div class="nav-links">
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="Events.html">Events</a></li>
-                <li><a href="#">Categories</a></li>
+                <li><a href="index.html#categories">Categories</a></li>
                 <li><a href="#">My Bookings</a></li>
                 <li><a href="About_us.html">About Us</a></li>
                 <li><a href="contacts.html">Contact</a></li>
             </ul>
         </div>
 
-        <div>
-
-            <button class="login-btn" onclick="location.href='login_page.html'">
-                Login
-            </button>
-
-            <button
-                class="register-btn"
-                onclick="location.href='registration_page.html'">
-                Register
-            </button>
-
+        <div class="nav-buttons">
+            <button onclick="window.location.href='login_page.html'" class="login-btn">Login</button>
+            <button onclick="window.location.href='registration_page.html'" class="register-btn">Register</button>
         </div>
-
     </nav>
 
 
@@ -303,14 +180,14 @@
                 <div class="form-group">
 
                     <label for="email">
-                        E-mail ID
+                        Username
                     </label>
 
                     <input
                         type="email"
                         id="email"
                         name="email"
-                        placeholder="Enter your email"
+                        placeholder="Enter your Username"
                         required>
 
                 </div>
@@ -343,7 +220,7 @@
 
                 <button
                     type="submit"
-                    class="login-submit">
+                    class="btn btn-primary login-submit">
                     Login
                 </button>
 

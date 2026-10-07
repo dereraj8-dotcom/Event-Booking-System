@@ -5,124 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>EventGo - About Us</title>
+    <link rel="stylesheet" href="common.css">
 
     <style>
-        :root {
-            --pink: #e93691;
-            --pink-dark: #d92b82;
-            --ink: #252936;
-            --muted: #53647d;
-            --pale: #fff1f8;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            color: var(--ink);
-            background: white;
-        }
-
-        a {
-            text-decoration: none;
-        }
-
-        .container {
-            width: min(1180px, 92%);
-            margin: auto;
-        }
-
-        .navbar {
-            min-height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-            background: white;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--ink);
-            font-size: 27px;
-            font-weight: 750;
-            white-space: nowrap;
-        }
-
-        .brand-mark {
-            width: 50px;
-            height: 50px;
-            border: 2px solid #7654d6;
-            color: #7654d6;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .brand span span {
-            color: #d92b82;
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--ink);
-            font-size: 13px;
-            padding: 25px 0 20px;
-            display: block;
-        }
-
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: #7551d1;
-        }
-
-        .nav-links a.active {
-            border-bottom: 2px solid #7551d1;
-        }
-
-        .nav-actions {
-            display: flex;
-            gap: 9px;
-            white-space: nowrap;
-        }
-
-        .btn {
-            display: inline-block;
-            border: 1px solid #7551d1;
-            border-radius: 8px;
-            padding: 10px 22px;
-            font-size: 13px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .btn-outline {
-            color: #7551d1;
-            background: white;
-        }
-
-        .btn-pink {
-            color: white;
-            background: #7551d1;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-        }
+        /* About Us Page Specific Styles */
 
         .hero {
             min-height: 220px;
@@ -231,7 +117,7 @@
             width: 38px;
             height: 3px;
             border-radius: 5px;
-            background: #7551d1;
+            background: var(--primary);
             margin-bottom: 8px;
         }
 
@@ -243,7 +129,7 @@
 
         .story h2 span,
         .section-heading span {
-            color: #7551d1;
+            color: var(--primary);
         }
 
         .story p {
@@ -304,7 +190,7 @@
             display: grid;
             place-items: center;
             color: white;
-            background: #7551d1;
+            background: var(--primary);
             font-size: 28px;
         }
 
@@ -315,11 +201,11 @@
 
         .mission-card h3 span,
         .feature h3 span {
-            color: #7551d1;
+            color: var(--primary);
         }
 
         .mission-card p {
-            color: #7551d1;
+            color: var(--primary);
             font-size: 12px;
             line-height: 1.6;
         }
@@ -384,92 +270,11 @@
 
         .cta .btn {
             background: white;
-            color: #7551d1;
+            color: var(--primary);
             border: none;
         }
 
-        footer {
-            background: #102441;
-            color: white;
-            padding: 30px 4% 12px;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr 1fr 1fr;
-            gap: 35px;
-            padding-bottom: 25px;
-        }
-
-        .footer-logo {
-            font-size: 26px;
-            font-weight: 750;
-            margin-bottom: 10px;
-        }
-
-        .footer-logo span {
-            color: var(--pink);
-        }
-
-        .footer-desc {
-            color: #c4d0df;
-            line-height: 1.7;
-        }
-
-        footer h4 {
-            font-size: 14px;
-            margin-bottom: 12px;
-        }
-
-        .footer-links {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .footer-links a,
-        .footer-contact p {
-            color: #c4d0df;
-            font-size: 13px;
-        }
-
-        .footer-links a:hover {
-            color: #ff76bd;
-        }
-
-        .footer-contact p {
-            margin-bottom: 10px;
-        }
-
-        .copyright {
-            display: flex;
-            justify-content: space-between;
-            gap: 15px;
-            flex-wrap: wrap;
-            padding-top: 14px;
-            border-top: 1px solid #344760;
-            color: #c4d0df;
-            font-size: 12px;
-        }
-
         @media (max-width: 1000px) {
-            .navbar {
-                flex-wrap: wrap;
-                padding: 12px 0;
-            }
-
-            .nav-links {
-                order: 3;
-                width: 100%;
-                justify-content: center;
-                flex-wrap: wrap;
-                gap: 20px;
-            }
-
-            .nav-links a {
-                padding: 8px 0;
-            }
-
             .mission-grid {
                 gap: 15px;
             }
@@ -516,25 +321,9 @@
                 margin: auto;
                 width: 100%;
             }
-
-            .brand {
-                font-size: 23px;
-            }
-
-            .nav-links {
-                gap: 13px;
-            }
-
-            .nav-links a {
-                font-size: 12px;
-            }
         }
 
         @media (max-width: 420px) {
-            .nav-actions .btn {
-                padding: 8px 12px;
-            }
-
             .mission-card {
                 padding: 15px;
                 gap: 13px;
@@ -556,39 +345,30 @@
 
 <body>
 
-    <header class="container">
-        <nav class="navbar">
+    <nav>
+        <div class="logo">
+            <div class="logo-icon">
+                <img src="logo_event.jpeg" alt="EventGo Logo">
+            </div>
+            Event<span class="logo-go">Go</span>
+        </div>
 
-            <!-- EventGo logo added here -->
-            <a class="brand" href="index.html">
-                <img
-                    class="brand-mark"
-                    src="logo_event.jpeg"
-                    alt="EventGo Logo"
-                    
-                >
-
-                <span style="color: var(--ink)">
-                    Event<span>Go</span>
-                </span>
-            </a>
-
-            <ul class="nav-links">
+        <div class="nav-links">
+            <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="Events.html">Events</a></li>
-                <li><a href="event.html">Categories</a></li>
-                <li><a href="my-bookings.html">My Bookings</a></li>
-                <li><a href="about.html" class="active">About Us</a></li>
+                <li><a href="index.html#categories">Categories</a></li>
+                <li><a href="#">My Bookings</a></li>
+                <li><a href="About_us.html" class="active">About Us</a></li>
                 <li><a href="contacts.html">Contact</a></li>
             </ul>
+        </div>
 
-            <div class="nav-actions">
-                <a class="btn btn-outline" href="login_page.html">Login</a>
-                <a class="btn btn-pink" href="registration_page.html">Register</a>
-            </div>
-
-        </nav>
-    </header>
+        <div class="nav-buttons">
+            <button onclick="window.location.href='login_page.html'" class="login-btn">Login</button>
+            <button onclick="window.location.href='registration_page.html'" class="register-btn">Register</button>
+        </div>
+    </nav>
 
     <main>
 
@@ -769,9 +549,9 @@
                 special to look forward to.
             </p>
 
-            <a class="btn" href="Events.html">
-                Explore Events &rarr;
-            </a>
+            <button class="btn btn-primary" onclick="window.location.href='Events.html'">
+                Explore Events →
+            </button>
         </section>
 
     </main>
@@ -792,10 +572,10 @@
                 <h4>Quick Links</h4>
                 <div class="footer-links">
                     <a href="index.html">Home</a>
-                    <a href="events.html">Events</a>
-                    <a href="#categories">Categories</a>
-                    <a href="my-bookings.html">My Bookings</a>
-                    <a href="#footer">About Us</a>
+                    <a href="Events.html">Events</a>
+                    <a href="index.html#categories">Categories</a>
+                    <a href="#">My Bookings</a>
+                    <a href="About_us.html">About Us</a>
                 </div>
             </div>
 
