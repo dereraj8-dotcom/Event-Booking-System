@@ -322,6 +322,229 @@
             background: var(--primary-hover);
         }
 
+
+
+        
+/* ===================================
+   EVENTGO - STYLISH EVENT DIALOG
+=================================== */
+
+#dialogWithComponents {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+
+    width: min(92%, 560px);
+    max-width: 560px;
+    max-height: 88vh;
+
+    padding: 0;
+    border: 1px solid rgba(118, 84, 214, 0.18);
+    border-radius: 22px;
+
+    background: #ffffff;
+    color: #24213a;
+
+    overflow: hidden;
+    overflow-y: auto;
+
+    box-shadow: 0 25px 80px rgba(20, 15, 45, 0.3);
+
+    animation: eventModalIn 0.25s ease-out;
+}
+
+/* Smooth opening animation */
+@keyframes eventModalIn {
+    from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Background overlay */
+#dialogWithComponents::backdrop {
+    background: rgba(18, 14, 35, 0.68);
+    backdrop-filter: blur(5px);
+}
+
+/* Header */
+#dialogWithComponents .dialog-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+
+    padding: 22px 25px;
+
+    background: linear-gradient(135deg, #7654d6, #a34fd1);
+    color: #ffffff;
+}
+
+#dialogWithComponents #modalTitle {
+    margin: 0;
+    color: #ffffff;
+    font-size: 1.45rem;
+    font-weight: 750;
+    line-height: 1.3;
+}
+
+/* Close button */
+#dialogWithComponents .btn-close {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+
+    background-color: rgba(255, 255, 255, 0.18);
+    opacity: 1;
+    cursor: pointer;
+    position: relative;
+}
+
+#dialogWithComponents .btn-close::before {
+    content: "×";
+    display: block;
+    color: #ffffff;
+    font-size: 27px;
+    line-height: 30px;
+}
+
+#dialogWithComponents .btn-close:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Main content */
+#dialogWithComponents .dialog-body {
+    padding: 24px 25px;
+}
+
+/* Event image */
+#dialogWithComponents #modalImage {
+    display: block;
+    width: 100%;
+    height: 245px;
+    object-fit: cover;
+    border-radius: 15px;
+    margin-bottom: 22px;
+    background: #f0edf8;
+}
+
+/* Location and date */
+#dialogWithComponents #modalLocation,
+#dialogWithComponents #modalDate {
+    margin: 12px 0;
+    color: #6c6880;
+    font-size: 0.98rem;
+    line-height: 1.6;
+}
+
+/* Price */
+#dialogWithComponents #modalPrice {
+    display: inline-flex;
+    align-items: center;
+
+    margin: 12px 0 0;
+    padding: 10px 17px;
+
+    border-radius: 12px;
+    background: #f1edff;
+    color: #6845c5;
+
+    font-size: 1.45rem;
+    font-weight: 800;
+}
+
+/* Footer */
+#dialogWithComponents .dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+
+    padding: 18px 25px 24px;
+    border-top: 1px solid #f0edf6;
+}
+
+/* Footer buttons */
+#dialogWithComponents .dialog-footer button {
+    min-height: 44px;
+    padding: 11px 20px;
+    border-radius: 10px;
+
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 650;
+
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease,
+                background-color 0.2s ease;
+}
+
+#dialogWithComponents .theme-secondary {
+    border: 1px solid #e4dfef;
+    background: #ffffff;
+    color: #514a67;
+}
+
+#dialogWithComponents .theme-secondary:hover {
+    background: #f6f3fc;
+}
+
+#dialogWithComponents .theme-primary {
+    border: none;
+    background: linear-gradient(135deg, #7654d6, #9652d5);
+    color: #ffffff;
+    box-shadow: 0 5px 14px rgba(118, 84, 214, 0.25);
+}
+
+#dialogWithComponents .theme-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(118, 84, 214, 0.35);
+}
+
+/* Mobile responsive */
+@media (max-width: 576px) {
+    #dialogWithComponents {
+        width: calc(100% - 24px);
+        max-height: 90vh;
+        border-radius: 17px;
+    }
+
+    #dialogWithComponents .dialog-header {
+        padding: 18px;
+    }
+
+    #dialogWithComponents #modalTitle {
+        font-size: 1.2rem;
+    }
+
+    #dialogWithComponents .dialog-body {
+        padding: 17px;
+    }
+
+    #dialogWithComponents #modalImage {
+        height: 190px;
+    }
+
+    #dialogWithComponents .dialog-footer {
+        padding: 15px 17px 18px;
+        gap: 8px;
+    }
+
+    #dialogWithComponents .dialog-footer button {
+        padding: 10px 13px;
+        font-size: 0.88rem;
+    }
+}
+
+
         /* RESPONSIVE */
 
         @media (max-width: 1050px) {
@@ -417,6 +640,9 @@
                 padding: 8px 5px;
             }
         }
+        #exampleModal .modal-dialog {
+    max-width: 95vw;
+}
 
         @media (max-width: 380px) {
             .events {
@@ -797,6 +1023,12 @@
     </div>
   </div>
 </div>
+               
+
+
+
+
+
 
     <!-- FOOTER -->
     <footer id="footer">
