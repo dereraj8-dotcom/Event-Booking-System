@@ -1,2 +1,4 @@
 # Event-Booking-System
-information about the project
+**Event Management System**
+
+The Event Management System is a web-based application designed to help users explore upcoming events and book tickets or passes online. The website features different categories of events, including concerts, music shows, comedy nights, festivals, workshops, and sports events. Users can view event details such as date, location, ticket price, and availability, making it easier to choose and book their preferred events. The website provides a user-friendly interface with a responsive design to ensure a smooth browsing experience across different devices. Developed using HTML, CSS, Bootstrap, and JavaScript, the project aims to simplify online event ticket booking and provide users with a convenient way to discover and attend exciting events.
