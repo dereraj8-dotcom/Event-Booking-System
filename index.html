@@ -5,9 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EventGo - Event Booking</title>
-    <link rel="stylesheet" href="common.css">
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="index.css">
 </head>
 
 <body>
@@ -23,8 +21,8 @@
             <ul>
                 <li><a href="index.html" class="active">Home</a></li>
                 <li><a href="Events.html">Events</a></li>
-                <li><a href="#categories">Categories</a></li>
-                <li id="bookModal" data-bs-toggle="modal" data-bs-target="#exampleModal" class="nav-item position-relative"><a href="#">My Bookings
+                <li><a href="Categories.html">Categories</a></li>
+                <li id="bookModal" data-bs-toggle="modal" data-bs-target="#exampleModal" class="nav-item position-relative"><a href="Events.html#bookings">My Bookings
                     <span
                   id="qty"
                   class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
@@ -46,6 +44,7 @@
     </nav>
 
     <section class="hero">
+        <div class="hero-overlay"></div>
         <div class="hero-content">
             <h1>Your Gateway to<br>Unforgettable Events</h1>
             <p>Find and book the best events happening around you.</p>
@@ -72,14 +71,14 @@
                         <option value="comedy">Comedy</option>
                         <option value="workshops">Workshops</option>
                         <option value="exhibitions">Exhibitions</option>
+                        <option value="conferences">Conferences</option>
+                        <option value="celebrations">Celebrations</option>
                     </select>
                 </div>
 
                 <button class="search-btn" id="searchBtn">Search</button>
             </div>
         </div>
-
-        <div class="hero-image"></div>
     </section>
 
     <main class="container">
@@ -216,8 +215,8 @@
                 <div class="footer-links">
                     <a href="index.html">Home</a>
                     <a href="Events.html">Events</a>
-                    <a href="#categories">Categories</a>
-                    <a href="#">My Bookings</a>
+                    <a href="Categories.html">Categories</a>
+                    <a href="Events.html#bookings">My Bookings</a>
                     <a href="About_us.html">About Us</a>
                 </div>
             </div>
@@ -248,7 +247,94 @@
             <p>Terms & Conditions &nbsp; | &nbsp; Privacy Policy</p>
         </div>
     </footer>
-    
-   
+
+    <script>
+        (function () {
+            try {
+                const savedBookings = JSON.parse(localStorage.getItem("eventGoBookings") || "[]");
+                const qtyBadge = document.getElementById("qty");
+                if (qtyBadge) {
+                    qtyBadge.textContent = savedBookings
+                        .filter(function (booking) { return booking.status === "Confirmed"; })
+                        .reduce(function (sum, booking) { return sum + booking.quantity; }, 0);
+                }
+            } catch (error) {}
+        })();
+
+        function goToEventsWithFilters() {
+            const location = document.getElementById("location").value.trim();
+            const date = document.getElementById("eventDate").value;
+            const category = document.getElementById("category").value;
+
+            const params = new URLSearchParams();
+
+            if (location) params.set("location", location);
+            if (date) params.set("date", date);
+            if (category) params.set("category", category);
+
+            window.location.href = "Events.html" + (params.toString() ? "?" + params.toString() : "");
+        }
+
+        document.getElementById("searchBtn").addEventListener("click", goToEventsWithFilters);
+
+        document.querySelectorAll(".search-item input, .search-item select").forEach(function (field) {
+            field.addEventListener("keydown", function (event) {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    goToEventsWithFilters();
+                }
+            });
+        });
+
+        const categoryMap = {
+            "Music": "Music",
+            "Sports": "Sports",
+            "Theatre": "Theatre",
+            "Comedy": "Comedy",
+            "Workshops": "Workshops",
+            "Exhibitions": "Exhibitions",
+            "Conferences": "Conferences",
+            "Celebrations": "Celebrations",
+            "More": "All"
+        };
+
+        document.querySelectorAll("#categories .category-card").forEach(function (card) {
+            card.addEventListener("click", function () {
+                const label = card.querySelector("p").textContent.trim();
+                const category = categoryMap[label] || "All";
+                window.location.href = category === "All" ? "Events.html" : "Events.html?category=" + encodeURIComponent(category);
+            });
+        });
+
+        document.getElementById("subscribeBtn").addEventListener("click", function () {
+            const emailInput = document.getElementById("email");
+            const email = emailInput.value.trim();
+            const wrapper = emailInput.closest(".newsletter-form");
+
+            let messageBox = wrapper.parentElement.querySelector(".newsletter-message");
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                if (!messageBox) {
+                    messageBox = document.createElement("p");
+                    messageBox.className = "newsletter-message";
+                    wrapper.insertAdjacentElement("afterend", messageBox);
+                }
+                messageBox.textContent = "Please enter a valid email address.";
+                messageBox.style.color = "#b42318";
+                return;
+            }
+
+            if (!messageBox) {
+                messageBox = document.createElement("p");
+                messageBox.className = "newsletter-message";
+                wrapper.insertAdjacentElement("afterend", messageBox);
+            }
+
+            messageBox.textContent = "Thank you for subscribing!";
+            messageBox.style.color = "#217344";
+            emailInput.value = "";
+        });
+    </script>
+
 </body>
 </html>

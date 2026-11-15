@@ -5,131 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>EventGo - Login</title>
-    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="Login.css">
 
-    <style>
-        body {
-            min-height: 100vh;
-            background: #f8f8f8;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Login Section */
-
-        .login-section {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 40px 20px;
-        }
-
-        .login-container {
-            width: 420px;
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: var(--shadow-md);
-        }
-
-        .login-container h1 {
-            text-align: center;
-            color: #222;
-            margin-bottom: 8px;
-        }
-
-        .login-container h1 span {
-            color: var(--pink);
-        }
-
-        .subtitle {
-            text-align: center;
-            color: #777;
-            font-size: 14px;
-            margin-bottom: 28px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 7px;
-            color: #333;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            outline: none;
-            font-size: 14px;
-        }
-
-        .form-group input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(117, 81, 209, 0.1);
-        }
-
-        .forgot-password {
-            display: flex;
-            text-align: center;
-            margin-top: -10px;
-            margin-bottom: 20px;
-        }
-
-        .forgot-password a {
-            color: var(--pink);
-            text-decoration: none;
-            font-size: 13px;
-        }
-
-        .login-submit {
-            width: 100%;
-            padding: 12px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .login-submit:hover {
-            background: var(--pink-dark);
-        }
-
-        .register-text {
-            text-align: center;
-            color: #777;
-            font-size: 14px;
-            margin-top: 20px;
-        }
-
-        .register-text a {
-            color: var(--pink);
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        /* Responsive */
-        @media (max-width: 500px) {
-            .login-section {
-                padding: 25px 15px;
-            }
-
-            .login-container {
-                width: 100%;
-                padding: 30px 22px;
-            }
-        }
-    </style>
 </head>
 
 <body>
@@ -146,8 +23,8 @@
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="Events.html">Events</a></li>
-                <li><a href="index.html#categories">Categories</a></li>
-                <li><a href="#">My Bookings</a></li>
+                <li><a href="Categories.html">Categories</a></li>
+                <li><a href="Events.html#bookings">My Bookings</a></li>
                 <li><a href="About_us.html">About Us</a></li>
                 <li><a href="contacts.html">Contact</a></li>
             </ul>
@@ -175,7 +52,7 @@
             </p>
 
 
-            <form method="post" action="index.html">
+            <form id="loginForm" novalidate>
 
                 <div class="form-group">
 
@@ -211,7 +88,7 @@
 
                 <div class="forgot-password">
 
-                    <a href="#">
+                    <a href="contacts.html">
                         Forgot Password?
                     </a>
 
@@ -229,7 +106,7 @@
 
                     Don't have an account?
 
-                    <a href="registration page.html">
+                    <a href="registration_page.html">
                         Register here
                     </a>
 
@@ -241,6 +118,178 @@
 
     </section>
 
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="footer-grid">
+
+            <div>
+                <div class="footer-logo">▦ Event<span>Go</span></div>
+                <p class="footer-desc">
+                    Your Gateway to Unforgettable Events.
+                    Discover experiences, connect with people
+                    and create memories.
+                </p>
+            </div>
+
+            <div>
+                <h4>Quick Links</h4>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="Events.html">Events</a>
+                    <a href="Categories.html">Categories</a>
+                    <a href="Events.html#bookings">My Bookings</a>
+                    <a href="About_us.html">About Us</a>
+                </div>
+            </div>
+
+            <div>
+                <h4>Follow Us</h4>
+                <div class="footer-links">
+                    <a href="https://www.facebook.com/">Facebook</a>
+                    <a href="https://www.instagram.com/">Instagram</a>
+                    <a href="https://www.youtube.com/">YouTube</a>
+                    <a href="https://www.linkedin.com/">LinkedIn</a>
+                </div>
+            </div>
+
+            <div>
+                <h4>Contact Us</h4>
+                <div class="footer-contact">
+                    <p>✉ support@eventgo.com</p>
+                    <p>☎ +91 98765 43210</p>
+                    <p>📍 Mumbai, India</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="copyright">
+            <p>© 2026 EventGo. All rights reserved.</p>
+            <p>Terms & Conditions &nbsp; | &nbsp; Privacy Policy</p>
+        </div>
+    </footer>
+
+    <script>
+        const loginForm = document.getElementById("loginForm");
+        const USERS_KEY = "eventGoUsers";
+        const CURRENT_USER_KEY = "eventGoCurrentUser";
+
+        function readJSON(key, fallback) {
+            try {
+                const saved = localStorage.getItem(key);
+                return saved ? JSON.parse(saved) : fallback;
+            } catch (error) {
+                return fallback;
+            }
+        }
+
+        function writeJSON(key, value) {
+            localStorage.setItem(key, JSON.stringify(value));
+        }
+
+        async function hashPassword(password) {
+            if (window.crypto && window.crypto.subtle) {
+                const data = new TextEncoder().encode(password);
+                const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+                return Array.from(new Uint8Array(hashBuffer))
+                    .map(function (byte) {
+                        return byte.toString(16).padStart(2, "0");
+                    })
+                    .join("");
+            }
+
+            let hash = 5381;
+            for (let i = 0; i < password.length; i++) {
+                hash = ((hash << 5) + hash + password.charCodeAt(i)) | 0;
+            }
+            return "fallback-" + Math.abs(hash).toString(16);
+        }
+
+        function setFieldError(input, message) {
+            const group = input.closest(".form-group");
+            let errorBox = group.querySelector(".field-error");
+
+            if (!errorBox) {
+                errorBox = document.createElement("small");
+                errorBox.className = "field-error";
+                group.appendChild(errorBox);
+            }
+
+            errorBox.textContent = message || "";
+        }
+
+        function clearErrors() {
+            loginForm.querySelectorAll(".field-error").forEach(function (errorBox) {
+                errorBox.textContent = "";
+            });
+        }
+
+        function showMessage(message, type) {
+            let messageBox = loginForm.parentElement.querySelector(".form-message");
+
+            if (!messageBox) {
+                messageBox = document.createElement("p");
+                messageBox.className = "form-message";
+                loginForm.insertAdjacentElement("afterend", messageBox);
+            }
+
+            messageBox.textContent = message;
+            messageBox.className = "form-message " + type;
+        }
+
+        loginForm.addEventListener("submit", async function (event) {
+            event.preventDefault();
+            clearErrors();
+
+            const emailInput = document.getElementById("email");
+            const passwordInput = document.getElementById("password");
+            const email = emailInput.value.trim().toLowerCase();
+            const password = passwordInput.value;
+
+            let isValid = true;
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                setFieldError(emailInput, "Please enter a valid email address.");
+                isValid = false;
+            }
+
+            if (!password) {
+                setFieldError(passwordInput, "Please enter your password.");
+                isValid = false;
+            }
+
+            if (!isValid) {
+                return;
+            }
+
+            const users = readJSON(USERS_KEY, []);
+            const user = users.find(function (item) {
+                return item.email.toLowerCase() === email;
+            });
+
+            if (!user) {
+                showMessage("No account found with this email address.", "error");
+                return;
+            }
+
+            const passwordHash = await hashPassword(password);
+
+            if (passwordHash !== user.passwordHash) {
+                showMessage("Incorrect password. Please try again.", "error");
+                return;
+            }
+
+            writeJSON(CURRENT_USER_KEY, {
+                name: user.name,
+                email: user.email
+            });
+
+            showMessage("Login successful. Redirecting...", "success");
+            setTimeout(function () {
+                window.location.href = "index.html";
+            }, 800);
+        });
+    </script>
+
 </body>
 </html>
-

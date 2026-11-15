@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventGo | Categories</title>
+    <link rel="stylesheet" href="Categories.css">
+
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <nav>
+        <div class="logo">
+            <div class="logo-icon">
+                <img src="logo_event.jpeg" alt="EventGo Logo">
+            </div>
+            Event<span class="logo-go">Go</span>
+        </div>
+
+        <div class="nav-links">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="Events.html">Events</a></li>
+                <li><a href="Categories.html" class="active">Categories</a></li>
+                <li id="bookModal" data-bs-toggle="modal" data-bs-target="#exampleModal" class="nav-item position-relative"><a href="Events.html#bookings">My Bookings
+                    <span
+                  id="qty"
+                  class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                >
+                  0
+                </span>
+                </a></li>
+                <li><a href="About_us.html">About Us</a></li>
+                <li><a href="contacts.html">Contact</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-buttons">
+            <button onclick="window.location.href='login_page.html'" class="login-btn">Login</button>
+            <button onclick="window.location.href='registration_page.html'" class="register-btn">Register</button>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <span class="tag">DISCOVER YOUR NEXT EXPERIENCE</span>
+
+        <h1>Explore Event <span>Categories</span></h1>
+
+        <p>
+            From live concerts to exciting festivals, discover events
+            that match your interests and make every moment memorable.
+        </p>
+    </section>
+
+    <!-- CATEGORIES SECTION -->
+    <main class="categories-section">
+
+        <div class="section-heading">
+            <h2>Find Your Perfect Event</h2>
+            <p>Explore our popular categories and discover something amazing.</p>
+        </div>
+
+        <div class="categories-grid">
+
+            <!-- Music -->
+            <article class="category-card" data-category="Music">
+                <div class="category-image">
+                    <img
+                        src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=800&q=80"
+                        alt="Music concert">
+                    <span class="category-label">POPULAR</span>
+                </div>
+                <div class="category-content">
+                    <h3>Music & Concerts</h3>
+                    <p>Experience live performances, music festivals and your favourite artists.</p>
+                    <div class="category-bottom">
+                        <span class="event-count">Live music events</span>
+                        <a href="Events.html" class="explore-btn">Explore &rarr;</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Weddings -->
+            <article class="category-card" data-category="Celebrations">
+                <div class="category-image">
+                    <img
+                        src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80"
+                        alt="Wedding celebration">
+                </div>
+                <div class="category-content">
+                    <h3>Weddings & Celebrations</h3>
+                    <p>Discover beautiful celebrations, wedding showcases and special occasions.</p>
+                    <div class="category-bottom">
+                        <span class="event-count">Special occasions</span>
+                        <a href="Events.html" class="explore-btn">Explore &rarr;</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Technology -->
+            <article class="category-card" data-category="Conferences">
+                <div class="category-image">
+                    <img
+                        src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80"
+                        alt="Technology conference">
+                </div>
+                <div class="category-content">
+                    <h3>Conferences & Tech</h3>
+                    <p>Attend industry conferences, technology events and professional meetups.</p>
+                    <div class="category-bottom">
+                        <span class="event-count">Learn and connect</span>
+                        <a href="Events.html" class="explore-btn">Explore &rarr;</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Comedy -->
+            <article class="category-card" data-category="Comedy">
+                <div class="category-image">
+                    <img
+                        src="https://images.unsplash.com/photo-1585699324551-f6c309eedeca?auto=format&fit=crop&w=800&q=80"
+                        alt="Comedy and entertainment">
+                </div>
+                <div class="category-content">
+                    <h3>Comedy & Entertainment</h3>
+                    <p>Enjoy stand-up comedy, theatre performances and entertaining live shows.</p>
+                    <div class="category-bottom">
+                        <span class="event-count">Laugh and enjoy</span>
+                        <a href="Events.html" class="explore-btn">Explore &rarr;</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Food -->
+            <article class="category-card" data-category="Food">
+                <div class="category-image">
+                    <img
+                        src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80"
+                        alt="Food festival">
+                </div>
+                <div class="category-content">
+                    <h3>Food & Festivals</h3>
+                    <p>Explore food festivals, local cuisines, culinary experiences and tastings.</p>
+                    <div class="category-bottom">
+                        <span class="event-count">Taste something new</span>
+                        <a href="Events.html" class="explore-btn">Explore &rarr;</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Workshops -->
+            <article class="category-card" data-category="Workshops">
+                <div class="category-image">
+                    <img
+                        src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80"
+                        alt="Workshop and learning">
+                </div>
+                <div class="category-content">
+                    <h3>Workshops & Learning</h3>
+                    <p>Build new skills through creative workshops, training sessions and classes.</p>
+                    <div class="category-bottom">
+                        <span class="event-count">Learn something new</span>
+                        <a href="Events.html" class="explore-btn">Explore &rarr;</a>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </main>
+
+    <!-- CALL TO ACTION -->
+    <section class="cta">
+        <h2>Ready to Make Memories?</h2>
+        <p>Find an event you love and make your next experience unforgettable.</p>
+        <a href="Events.html">Browse All Events &rarr;</a>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="footer">
+        <div class="footer-grid">
+
+            <div>
+                <div class="footer-logo">▦ Event<span>Go</span></div>
+                <p class="footer-desc">
+                    Your Gateway to Unforgettable Events.
+                    Discover experiences, connect with people
+                    and create memories.
+                </p>
+            </div>
+
+            <div>
+                <h4>Quick Links</h4>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="Events.html">Events</a>
+                    <a href="Categories.html">Categories</a>
+                    <a href="Events.html#bookings">My Bookings</a>
+                    <a href="About_us.html">About Us</a>
+                </div>
+            </div>
+
+            <div>
+                <h4>Follow Us</h4>
+                <div class="footer-links">
+                    <a href="https://www.facebook.com/">Facebook</a>
+                    <a href="https://www.instagram.com/">Instagram</a>
+                    <a href="https://www.youtube.com/">YouTube</a>
+                    <a href="https://www.linkedin.com/">LinkedIn</a>
+                </div>
+            </div>
+
+            <div>
+                <h4>Contact Us</h4>
+                <div class="footer-contact">
+                    <p>✉ support@eventgo.com</p>
+                    <p>☎ +91 98765 43210</p>
+                    <p>📍 Mumbai, India</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="copyright">
+            <p>© 2026 EventGo. All rights reserved.</p>
+            <p>Terms & Conditions &nbsp; | &nbsp; Privacy Policy</p>
+        </div>
+    </footer>
+
+    <script>
+        (function () {
+            try {
+                const savedBookings = JSON.parse(localStorage.getItem("eventGoBookings") || "[]");
+                const qtyBadge = document.getElementById("qty");
+                if (qtyBadge) {
+                    qtyBadge.textContent = savedBookings
+                        .filter(function (booking) { return booking.status === "Confirmed"; })
+                        .reduce(function (sum, booking) { return sum + booking.quantity; }, 0);
+                }
+            } catch (error) {}
+        })();
+
+        document.querySelectorAll(".category-card[data-category]").forEach(function (card) {
+            card.addEventListener("click", function (event) {
+                event.preventDefault();
+                const category = card.dataset.category;
+                window.location.href = "Events.html?category=" + encodeURIComponent(category);
+            });
+        });
+    </script>
+
+</body>
+</html>
