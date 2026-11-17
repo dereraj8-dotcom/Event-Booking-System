@@ -1,902 +1,659 @@
+
 // EventGo Events Page
-// All booking and event data is stored in the browser using LocalStorage.
 
 const eventList = [
     {
         id: 101,
         img: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=600&q=80",
         name: "Sunburn Arena",
-        description: "📍 Goa, India",
-        date: "▦ 12 OCT 2026",
+        description: "Goa, India",
+        date: "12 OCT 2026",
         price: 1099,
         category: "Music",
-        venue: "Goa, India",
-        dateISO: "2026-10-12",
         availableTickets: 100
     },
     {
         id: 102,
         img: "https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&w=600&q=80",
         name: "Lagaan The Musical",
-        description: "📍 Mumbai, India",
-        date: "▦ 18 OCT 2026",
+        description: "Mumbai, India",
+        date: "18 OCT 2026",
         price: 1299,
         category: "Theatre",
-        venue: "Mumbai, India",
-        dateISO: "2026-10-18",
         availableTickets: 100
     },
     {
         id: 103,
         img: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=600&q=80",
         name: "Delhi Food Festival",
-        description: "📍 Delhi, India",
-        date: "▦ 20 OCT 2026",
+        description: "Delhi, India",
+        date: "20 OCT 2026",
         price: 499,
         category: "Food",
-        venue: "Delhi, India",
-        dateISO: "2026-10-20",
         availableTickets: 100
     },
     {
         id: 104,
         img: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=600&q=80",
         name: "Tech Conference",
-        description: "📍 Bengaluru, India",
-        date: "▦ 25 OCT 2026",
+        description: "Bengaluru, India",
+        date: "25 OCT 2026",
         price: 1499,
         category: "Conferences",
-        venue: "Bengaluru, India",
-        dateISO: "2026-10-25",
         availableTickets: 100
     },
     {
         id: 105,
         img: "https://images.unsplash.com/photo-1585699324551-f6c309eedeca?auto=format&fit=crop&w=600&q=80",
         name: "Comedy Night Live",
-        description: "📍 Mumbai, India",
-        date: "▦ 02 NOV 2026",
+        description: "Mumbai, India",
+        date: "02 NOV 2026",
         price: 799,
         category: "Comedy",
-        venue: "Mumbai, India",
-        dateISO: "2026-11-02",
         availableTickets: 100
     },
     {
         id: 106,
         img: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=600&q=80",
         name: "Art & Painting Workshop",
-        description: "📍 Pune, India",
-        date: "▦ 03 NOV 2026",
+        description: "Pune, India",
+        date: "03 NOV 2026",
         price: 599,
         category: "Workshops",
-        venue: "Pune, India",
-        dateISO: "2026-11-03",
         availableTickets: 100
     },
     {
         id: 107,
         img: "https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=600&q=80",
         name: "Football Match",
-        description: "📍 Kolkata, India",
-        date: "▦ 08 NOV 2026",
+        description: "Kolkata, India",
+        date: "08 NOV 2026",
         price: 899,
         category: "Sports",
-        venue: "Kolkata, India",
-        dateISO: "2026-11-08",
         availableTickets: 100
     },
     {
         id: 108,
         img: "https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?auto=format&fit=crop&w=600&q=80",
         name: "Modern Art Exhibition",
-        description: "📍 Delhi, India",
-        date: "▦ 15 NOV 2026",
+        description: "Delhi, India",
+        date: "15 NOV 2026",
         price: 699,
         category: "Exhibitions",
-        venue: "Delhi, India",
-        dateISO: "2026-11-15",
         availableTickets: 100
     }
 ];
 
-// LocalStorage keys
-const EVENTS_KEY = "eventGoEvents";
-const BOOKINGS_KEY = "eventGoBookings";
-const AVAILABILITY_KEY = "eventGoAvailability";
-const BOOKING_COUNTER_KEY = "eventGoBookingCounter";
 
-const eventsGrid = document.getElementById("eventsGrid");
-const searchInput = document.getElementById("searchInput");
-const locationInput = document.getElementById("locationInput");
-const dateInput = document.getElementById("dateInput");
-const categorySelect = document.getElementById("categorySelect");
-const sortSelect = document.getElementById("sortSelect");
-const eventHeading = document.getElementById("eventHeading");
-const clearFiltersBtn = document.getElementById("clearFilters");
-const ticketContainer = document.getElementById("ticket");
-const qtyBadge = document.getElementById("qty");
+// LocalStorage
 
-let selectedCategory = "All";
-let bookings = loadBookings();
-let availability = loadAvailability();
-let currentEvent = null;
-let isBookingSubmitting = false;
+let bookings = JSON.parse(localStorage.getItem("eventGoBookings")) || [];
 
-// ---------- LocalStorage helpers ----------
+let availability = JSON.parse(localStorage.getItem("eventGoAvailability")) || {};
 
-function readStorage(key, fallback) {
-    try {
-        const saved = localStorage.getItem(key);
-        return saved ? JSON.parse(saved) : fallback;
-    } catch (error) {
-        console.error("Could not read " + key, error);
-        return fallback;
-    }
-}
+eventList.forEach(function(event) {
 
-function writeStorage(key, value) {
-    try {
-        localStorage.setItem(key, JSON.stringify(value));
-    } catch (error) {
-        console.error("Could not save " + key, error);
-    }
-}
-
-function loadBookings() {
-    const saved = readStorage(BOOKINGS_KEY, []);
-    return Array.isArray(saved) ? saved : [];
-}
-
-function saveBookings() {
-    writeStorage(BOOKINGS_KEY, bookings);
-}
-
-function loadAvailability() {
-    const saved = readStorage(AVAILABILITY_KEY, null);
-
-    if (saved && typeof saved === "object") {
-        return saved;
+    if (availability[event.id] === undefined) {
+        availability[event.id] = event.availableTickets;
     }
 
-    const initial = {};
-    eventList.forEach(function (event) {
-        initial[event.id] = event.availableTickets;
+});
+
+function saveData() {
+
+    localStorage.setItem("eventGoBookings", JSON.stringify(bookings));
+
+    localStorage.setItem("eventGoAvailability", JSON.stringify(availability));
+
+}
+
+
+// Display Events
+
+function showEvents(events) {
+
+    const eventContainer = document.getElementById("eventsGrid");
+
+    if (!eventContainer) return;
+
+    eventContainer.innerHTML = "";
+
+    if (events.length === 0) {
+        eventContainer.innerHTML =
+            "<h4 class='text-center'>No events found!</h4>";
+        return;
+    }
+
+    events.forEach(function(event) {
+
+        const card = document.createElement("div");
+        card.classList.add("event-card");
+
+        const section1 = document.createElement("section");
+        section1.classList.add("event-image");
+
+        const image = document.createElement("img");
+        image.src = event.img;
+        image.alt = event.name;
+
+        section1.appendChild(image);
+
+        const section2 = document.createElement("section");
+        section2.classList.add("event-info");
+
+        const name = document.createElement("h3");
+        name.textContent = event.name;
+
+        const location = document.createElement("p");
+        location.textContent = "📍 " + event.description;
+
+        const date = document.createElement("p");
+        date.textContent = "📅 " + event.date;
+
+        const category = document.createElement("p");
+        category.textContent = "Category: " + event.category;
+
+        const tickets = document.createElement("p");
+        tickets.textContent = availability[event.id] + " tickets available";
+
+        const price = document.createElement("p");
+        price.textContent = "₹" + event.price;
+
+        const bookButton = document.createElement("button");
+
+        bookButton.textContent =
+            availability[event.id] > 0 ? "Book Now" : "Sold Out";
+
+        bookButton.disabled = availability[event.id] <= 0;
+
+        bookButton.addEventListener("click", function() {
+            addToBooking(event);
+        });
+
+        section2.appendChild(name);
+        section2.appendChild(location);
+        section2.appendChild(date);
+        section2.appendChild(category);
+        section2.appendChild(tickets);
+        section2.appendChild(price);
+        section2.appendChild(bookButton);
+
+        card.appendChild(section1);
+        card.appendChild(section2);
+
+        eventContainer.appendChild(card);
+
     });
 
-    writeStorage(AVAILABILITY_KEY, initial);
-    return initial;
 }
 
-function saveAvailability() {
-    writeStorage(AVAILABILITY_KEY, availability);
-}
 
-function getAvailableTickets(eventId) {
-    if (typeof availability[eventId] === "number") {
-        return availability[eventId];
-    }
+// Add Booking
 
-    const event = eventList.find(function (item) {
-        return item.id === eventId;
+function addToBooking(event) {
+
+    const existingEvent = bookings.find(function(item) {
+        return item.id === event.id && item.status === "Confirmed";
     });
 
-    return event ? event.availableTickets : 0;
-}
-
-function setAvailableTickets(eventId, quantity) {
-    availability[eventId] = Math.max(0, quantity);
-    saveAvailability();
-}
-
-function nextBookingId() {
-    let counter = readStorage(BOOKING_COUNTER_KEY, 0);
-    counter += 1;
-    writeStorage(BOOKING_COUNTER_KEY, counter);
-    return "EG-" + String(counter).padStart(4, "0");
-}
-
-// ---------- Event rendering ----------
-
-function renderEvents() {
-    if (!eventsGrid) {
+    if (availability[event.id] <= 0) {
+        alert("Tickets are sold out!");
         return;
     }
 
-    const search = searchInput ? searchInput.value.trim().toLowerCase() : "";
-    const location = locationInput ? locationInput.value.trim().toLowerCase() : "";
-    const date = dateInput ? dateInput.value : "";
-    const category = categorySelect ? categorySelect.value : "All";
-    const activeCategory = category !== "All" ? category : selectedCategory;
+    if (existingEvent) {
 
-    let filteredEvents = eventList.filter(function (event) {
-        const searchableText = (
-            event.name + " " +
-            event.venue + " " +
-            event.category + " " +
-            event.description
-        ).toLowerCase();
+        existingEvent.quantity++;
 
-        const matchesSearch = !search || searchableText.includes(search);
-        const matchesLocation = !location || event.venue.toLowerCase().includes(location);
-        const matchesDate = !date || event.dateISO === date;
-        const matchesCategory =
-            activeCategory === "All" ||
-            event.category === activeCategory;
+    } else {
 
-        return matchesSearch && matchesLocation && matchesDate && matchesCategory;
-    });
+        const booking = {
+            id: event.id,
+            bookingId: "EG-" + Date.now(),
+            name: event.name,
+            date: event.date,
+            venue: event.description,
+            price: event.price,
+            quantity: 1,
+            status: "Confirmed"
+        };
 
-    filteredEvents.sort(function (a, b) {
-        if (sortSelect && sortSelect.value === "price-low") {
-            return a.price - b.price;
-        }
+        bookings.push(booking);
 
-        if (sortSelect && sortSelect.value === "price-high") {
-            return b.price - a.price;
-        }
-
-        if (sortSelect && sortSelect.value === "name") {
-            return a.name.localeCompare(b.name);
-        }
-
-        if (sortSelect && sortSelect.value === "date") {
-            return a.dateISO.localeCompare(b.dateISO);
-        }
-
-        return a.dateISO.localeCompare(b.dateISO);
-    });
-
-    eventsGrid.innerHTML = "";
-
-    if (filteredEvents.length === 0) {
-        const emptyMessage = document.createElement("p");
-        emptyMessage.className = "no-results";
-        emptyMessage.textContent = "No events found. Try changing your search or filters.";
-        eventsGrid.appendChild(emptyMessage);
     }
 
-    filteredEvents.forEach(function (event) {
-        eventsGrid.appendChild(createEventCard(event));
-    });
+    availability[event.id]--;
 
-    if (eventHeading) {
-        eventHeading.textContent = activeCategory + " Events (" + filteredEvents.length + ")";
-    }
-}
-
-function createEventCard(event) {
-    const card = document.createElement("article");
-    card.className = "event-card";
-    card.dataset.eventId = event.id;
-
-    const imageSection = document.createElement("section");
-    imageSection.className = "event-image";
-
-    const image = document.createElement("img");
-    image.src = event.img;
-    image.alt = event.name;
-
-    const infoSection = document.createElement("section");
-    infoSection.className = "event-info";
-
-    const title = document.createElement("h3");
-    title.textContent = event.name;
-
-    const venue = document.createElement("p");
-    venue.className = "event-detail";
-    venue.textContent = event.description;
-
-    const category = document.createElement("p");
-    category.className = "event-detail";
-    category.textContent = "Category: " + event.category;
-
-    const eventDate = document.createElement("p");
-    eventDate.className = "event-detail";
-    eventDate.textContent = event.date;
-
-    const ticketsLeft = document.createElement("p");
-    ticketsLeft.className = "event-detail";
-    ticketsLeft.textContent = getAvailableTickets(event.id) + " tickets available";
-
-    const bottom = document.createElement("div");
-    bottom.className = "event-bottom";
-
-    const price = document.createElement("span");
-    price.className = "price";
-    price.textContent = "₹" + event.price;
-
-    const bookButton = document.createElement("button");
-    bookButton.type = "button";
-    bookButton.className = "book-btn";
-    bookButton.textContent = getAvailableTickets(event.id) > 0 ? "Book Now" : "Sold Out";
-    bookButton.disabled = getAvailableTickets(event.id) <= 0;
-    bookButton.addEventListener("click", function (clickEvent) {
-        clickEvent.stopPropagation();
-        addToBooking(event);
-    });
-
-    bottom.appendChild(price);
-    bottom.appendChild(bookButton);
-
-    infoSection.appendChild(title);
-    infoSection.appendChild(venue);
-    infoSection.appendChild(category);
-    infoSection.appendChild(eventDate);
-    infoSection.appendChild(ticketsLeft);
-    infoSection.appendChild(bottom);
-
-    imageSection.appendChild(image);
-    card.appendChild(imageSection);
-    card.appendChild(infoSection);
-
-    card.addEventListener("click", function (clickEvent) {
-        if (clickEvent.target.closest(".book-btn")) {
-            return;
-        }
-        openEventDialog(event);
-    });
-
-    return card;
-}
-
-// ---------- Event details and booking dialog ----------
-
-function ensureBookingDialog() {
-    let dialog = document.getElementById("dialogWithComponents");
-
-    if (!dialog) {
-        dialog = document.createElement("dialog");
-        dialog.id = "dialogWithComponents";
-        dialog.className = "dialog dialog-instant";
-        document.body.appendChild(dialog);
-    }
-
-    return dialog;
-}
-
-function openEventDialog(event) {
-    currentEvent = event;
-    isBookingSubmitting = false;
-
-    const dialog = ensureBookingDialog();
-
-    dialog.innerHTML = `
-        <div class="dialog-header">
-            <h2 id="modalTitle">${escapeHtml(event.name)}</h2>
-            <button type="button" id="closeDialogBtn" class="btn-close" aria-label="Close"></button>
-        </div>
-
-        <div class="dialog-body">
-            <img id="modalImage" src="${escapeHtml(event.img)}" alt="${escapeHtml(event.name)}">
-
-            <p id="modalLocation">${escapeHtml(event.venue)} • ${escapeHtml(event.category)}</p>
-            <p id="modalDate">${escapeHtml(event.date)}</p>
-            <h3 id="modalPrice">₹${event.price} per ticket</h3>
-
-            <p id="modalAvailability">${getAvailableTickets(event.id)} tickets available</p>
-
-            <div class="d-flex align-items-center gap-2 mt-3">
-                <button type="button" class="btn btn-outline-secondary" id="decreaseQtyBtn">-</button>
-                <input
-                    type="number"
-                    id="bookingQuantity"
-                    class="form-control"
-                    min="1"
-                    max="${getAvailableTickets(event.id)}"
-                    value="1"
-                    style="max-width: 90px; text-align: center;">
-                <button type="button" class="btn btn-outline-secondary" id="increaseQtyBtn">+</button>
-            </div>
-
-            <p class="mt-3 mb-1"><strong>Total: <span id="bookingTotal">₹${event.price}</span></strong></p>
-            <p id="bookingError" class="text-danger small mb-0"></p>
-        </div>
-
-        <div class="dialog-footer">
-            <button type="button" id="closeDialogFooter" class="btn-solid theme-secondary">Close</button>
-            <button type="button" id="modalBookBtn" class="btn-solid theme-primary">Confirm Booking</button>
-        </div>
-    `;
-
-    dialog.querySelector("#closeDialogBtn").onclick = function () {
-        dialog.close();
-    };
-
-    dialog.querySelector("#closeDialogFooter").onclick = function () {
-        dialog.close();
-    };
-
-    dialog.querySelector("#decreaseQtyBtn").onclick = function () {
-        changeBookingQuantity(-1);
-    };
-
-    dialog.querySelector("#increaseQtyBtn").onclick = function () {
-        changeBookingQuantity(1);
-    };
-
-    dialog.querySelector("#bookingQuantity").addEventListener("input", updateBookingTotal);
-
-    dialog.querySelector("#modalBookBtn").onclick = confirmBooking;
-
-    if (!dialog.open) {
-        dialog.showModal();
-    }
-}
-
-function changeBookingQuantity(change) {
-    const input = document.getElementById("bookingQuantity");
-
-    if (!input || !currentEvent) {
-        return;
-    }
-
-    let quantity = parseInt(input.value, 10);
-
-    if (isNaN(quantity)) {
-        quantity = 1;
-    }
-
-    quantity += change;
-    quantity = Math.min(Math.max(quantity, 1), getAvailableTickets(currentEvent.id));
-    input.value = quantity;
-    updateBookingTotal();
-}
-
-function updateBookingTotal() {
-    const input = document.getElementById("bookingQuantity");
-    const total = document.getElementById("bookingTotal");
-
-    if (!input || !total || !currentEvent) {
-        return;
-    }
-
-    let quantity = parseInt(input.value, 10);
-
-    if (isNaN(quantity) || quantity < 1) {
-        quantity = 1;
-        input.value = quantity;
-    }
-
-    total.textContent = "₹" + (currentEvent.price * quantity);
-}
-
-function confirmBooking() {
-    if (!currentEvent || isBookingSubmitting) {
-        return;
-    }
-
-    const quantityInput = document.getElementById("bookingQuantity");
-    const errorBox = document.getElementById("bookingError");
-    const confirmButton = document.getElementById("modalBookBtn");
-
-    if (!quantityInput || !errorBox || !confirmButton) {
-        return;
-    }
-
-    const quantity = parseInt(quantityInput.value, 10);
-    const available = getAvailableTickets(currentEvent.id);
-
-    errorBox.textContent = "";
-
-    if (isNaN(quantity) || quantity < 1) {
-        errorBox.textContent = "Please enter a valid ticket quantity.";
-        return;
-    }
-
-    if (quantity > available) {
-        errorBox.textContent = "Only " + available + " tickets are available for this event.";
-        return;
-    }
-
-    isBookingSubmitting = true;
-    confirmButton.disabled = true;
-    confirmButton.textContent = "Booking...";
-
-    const booking = {
-        bookingId: nextBookingId(),
-        eventId: currentEvent.id,
-        eventName: currentEvent.name,
-        category: currentEvent.category,
-        venue: currentEvent.venue,
-        date: currentEvent.date,
-        dateISO: currentEvent.dateISO,
-        quantity: quantity,
-        pricePerTicket: currentEvent.price,
-        totalAmount: currentEvent.price * quantity,
-        status: "Confirmed",
-        createdAt: new Date().toISOString()
-    };
-
-    bookings.unshift(booking);
-    saveBookings();
-    setAvailableTickets(currentEvent.id, available - quantity);
-
-    renderEvents();
-    showBookingSuccess(booking);
-}
-
-function showBookingSuccess(booking) {
-    const dialog = document.getElementById("dialogWithComponents");
-
-    if (!dialog) {
-        return;
-    }
-
-    dialog.innerHTML = `
-        <div class="dialog-header">
-            <h2 id="modalTitle">Booking Confirmed</h2>
-            <button type="button" id="closeDialogBtn" class="btn-close" aria-label="Close"></button>
-        </div>
-
-        <div class="dialog-body text-center">
-            <div style="font-size: 42px; color: #217344; margin-bottom: 12px;">✓</div>
-            <h3 class="mb-2">${escapeHtml(booking.eventName)}</h3>
-            <p class="mb-1">Booking ID: <strong>${escapeHtml(booking.bookingId)}</strong></p>
-            <p class="mb-1">Quantity: ${booking.quantity}</p>
-            <p class="mb-1">Total Amount: <strong>₹${booking.totalAmount}</strong></p>
-            <p class="mb-0">Status: <strong>Confirmed</strong></p>
-        </div>
-
-        <div class="dialog-footer">
-            <button type="button" id="closeDialogFooter" class="btn-solid theme-secondary">Done</button>
-            <button type="button" id="viewBookingsBtn" class="btn-solid theme-primary">View My Bookings</button>
-        </div>
-    `;
-
-    dialog.querySelector("#closeDialogBtn").onclick = function () {
-        dialog.close();
-    };
-
-    dialog.querySelector("#closeDialogFooter").onclick = function () {
-        dialog.close();
-    };
-
-    dialog.querySelector("#viewBookingsBtn").onclick = function () {
-        dialog.close();
-        showBooking();
-        openBookingsModal();
-    };
+    saveData();
 
     updateBookingCount();
+
+    showEvents(eventList);
+
+    alert("Event booked successfully!");
+
 }
 
-// Compatibility name used by existing card markup.
-function addToBooking(event) {
-    openEventDialog(event);
-}
 
-// ---------- My Bookings modal ----------
-
-function openBookingsModal() {
-    const modalElement = document.getElementById("exampleModal");
-
-    if (modalElement && window.bootstrap && window.bootstrap.Modal) {
-        const modal = window.bootstrap.Modal.getOrCreateInstance(modalElement);
-        modal.show();
-        return;
-    }
-
-    if (modalElement) {
-        modalElement.style.display = "block";
-        modalElement.classList.add("show");
-    }
-}
+// Show Bookings
 
 function showBooking() {
-    if (!ticketContainer) {
-        return;
-    }
+
+    let subTotal = 0;
+
+    const billTable = document.getElementById("ticket");
+
+    if (!billTable) return;
 
     if (bookings.length === 0) {
-        ticketContainer.innerHTML = `
-            <div class="text-center py-5">
-                <h5 class="mb-2">No bookings yet</h5>
-                <p class="text-muted mb-0">Book an event to see your tickets here.</p>
-            </div>
-        `;
+
+        billTable.innerHTML =
+            "<h5 class='text-center'>No bookings found!</h5>";
+
         updateBookingCount();
+
         return;
     }
 
     let tableCode = `
         <div class="table-responsive">
-            <table class="table table-bordered table-striped align-middle">
-                <thead>
-                    <tr>
-                        <th>Booking ID</th>
-                        <th>Event Name</th>
-                        <th>Date</th>
-                        <th>Venue</th>
-                        <th>Quantity</th>
-                        <th>Total Amount</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
+        <table class="table table-bordered table-striped">
+        <tr>
+            <th>Booking ID</th>
+            <th>Event Name</th>
+            <th>Date</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
     `;
 
-    bookings.forEach(function (booking) {
-        const canCancel = booking.status === "Confirmed";
-        const cancelButton = canCancel
-            ? `<button type="button" class="btn btn-outline-danger btn-sm" data-cancel-booking="${escapeHtml(booking.bookingId)}">Cancel</button>`
-            : `<span class="badge bg-secondary">Cancelled</span>`;
+    bookings.forEach(function(item) {
+
+        let total = item.price * item.quantity;
+
+        subTotal += total;
 
         tableCode += `
             <tr>
-                <td>${escapeHtml(booking.bookingId)}</td>
-                <td>${escapeHtml(booking.eventName)}</td>
-                <td>${escapeHtml(booking.date)}</td>
-                <td>${escapeHtml(booking.venue)}</td>
-                <td>${booking.quantity}</td>
-                <td>₹${booking.totalAmount}</td>
-                <td><span class="badge ${booking.status === "Confirmed" ? "bg-success" : "bg-danger"}">${escapeHtml(booking.status)}</span></td>
-                <td>${cancelButton}</td>
+                <td>${item.bookingId}</td>
+                <td>${item.name}</td>
+                <td>${item.date}</td>
+                <td>₹${item.price}</td>
+
+                <td>
+                    ${item.status === "Confirmed" ? `
+                    <button class="btn btn-danger btn-sm"
+                    onclick="decreaseQty(${item.id})">-</button>
+                    ` : ""}
+
+                    ${item.quantity}
+
+                    ${item.status === "Confirmed" ? `
+                    <button class="btn btn-success btn-sm"
+                    onclick="increaseQty(${item.id})">+</button>
+                    ` : ""}
+                </td>
+
+                <td>₹${total}</td>
+
+                <td>${item.status}</td>
+
+                <td>
+                    ${item.status === "Confirmed" ? `
+                    <button class="btn btn-outline-danger btn-sm"
+                    onclick="removeItem('${item.bookingId}')">
+                    Cancel
+                    </button>
+                    ` : "Cancelled"}
+                </td>
             </tr>
         `;
+
     });
 
     tableCode += `
-                </tbody>
-            </table>
+        <tr>
+            <td colspan="5" class="text-end">
+                <strong>Total Billing</strong>
+            </td>
+            <td colspan="3"><strong>₹${subTotal}</strong></td>
+        </tr>
+        </table>
         </div>
+
+        <button class="btn btn-success w-100 mt-3"
+        onclick="payNow()">
+            Proceed to Pay ₹${subTotal}
+        </button>
     `;
 
-    ticketContainer.innerHTML = tableCode;
+    billTable.innerHTML = tableCode;
+
     updateBookingCount();
+
 }
 
-function cancelBooking(bookingId) {
-    const booking = bookings.find(function (item) {
-        return item.bookingId === bookingId;
+
+// Open Payment Modal
+
+function payNow() {
+
+    const pendingBookings = bookings.filter(function(item) {
+        return item.status === "Confirmed" && !item.paymentStatus;
     });
 
-    if (!booking || booking.status !== "Confirmed") {
+    if (pendingBookings.length === 0) {
+        alert("No unpaid bookings available!");
         return;
     }
 
-    const event = eventList.find(function (item) {
-        return item.id === booking.eventId;
-    });
+    let modal = new bootstrap.Modal(
+        document.getElementById("paymentModal")
+    );
 
-    booking.status = "Cancelled";
-    booking.cancelledAt = new Date().toISOString();
+    modal.show();
 
-    if (event) {
-        setAvailableTickets(event.id, getAvailableTickets(event.id) + booking.quantity);
+}
+
+
+// Payment Fields
+
+document.getElementById("paymentMethod").addEventListener("change", function() {
+
+    let method = this.value;
+
+    let fields = document.getElementById("paymentFields");
+
+    if (method === "UPI") {
+
+        fields.innerHTML = `
+            <label class="form-label">UPI ID</label>
+            <input type="text" id="paymentDetails"
+            class="form-control" placeholder="example@upi" required>
+        `;
+
     }
 
-    saveBookings();
-    renderEvents();
-    showBooking();
+    else if (method === "Credit/Debit Card") {
+
+        fields.innerHTML = `
+            <label class="form-label">Card Number</label>
+            <input type="text" id="paymentDetails"
+            class="form-control" placeholder="Demo card number"
+            maxlength="19" required>
+        `;
+
+    }
+
+    else if (method === "Net Banking") {
+
+        fields.innerHTML = `
+            <label class="form-label">Bank Name</label>
+            <input type="text" id="paymentDetails"
+            class="form-control" placeholder="Enter bank name" required>
+        `;
+
+    }
+
+    else {
+        fields.innerHTML = "";
+    }
+
+});
+
+
+// Confirm Payment and Generate Receipt
+
+function confirmPayment() {
+
+    let name = document.getElementById("customerName").value.trim();
+
+    let email = document.getElementById("customerEmail").value.trim();
+
+    let phone = document.getElementById("customerPhone").value.trim();
+
+    let method = document.getElementById("paymentMethod").value;
+
+    let details = document.getElementById("paymentDetails");
+
+    if (!name || !email || !/^[0-9]{10}$/.test(phone) || !method) {
+
+        alert("Please enter valid customer details!");
+
+        return;
+    }
+
+    if (method !== "Cash at Venue" &&
+        (!details || !details.value.trim())) {
+
+        alert("Please enter payment details!");
+
+        return;
+    }
+
+    if (confirm("Do you want to confirm your payment?")) {
+
+        let pendingBookings = bookings.filter(function(item) {
+            return item.status === "Confirmed" && !item.paymentStatus;
+        });
+
+        if (pendingBookings.length === 0) {
+            alert("No unpaid bookings available!");
+            return;
+        }
+
+        let receiptNumber = "EGR-" + Date.now();
+
+        pendingBookings.forEach(function(item) {
+
+            item.customerName = name;
+
+            item.customerEmail = email;
+
+            item.customerPhone = phone;
+
+            item.paymentMethod = method;
+
+            item.paymentStatus =
+                method === "Cash at Venue" ? "Pending" : "Paid";
+
+            item.bookingDate = new Date().toLocaleString();
+
+            item.receiptNumber = receiptNumber;
+
+        });
+
+        saveData();
+
+        alert("Booking completed successfully!");
+
+        window.location.href = "Receipt.html";
+
+    }
+
 }
+
+
+// Increase Quantity
+
+function increaseQty(eventID) {
+
+    const existingEvent = bookings.find(function(item) {
+        return item.id === eventID &&
+               item.status === "Confirmed" &&
+               !item.paymentStatus;
+    });
+
+    if (!existingEvent || availability[eventID] <= 0) {
+
+        alert("No more tickets available!");
+
+        return;
+    }
+
+    existingEvent.quantity++;
+
+    availability[eventID]--;
+
+    saveData();
+
+    showBooking();
+
+    showEvents(eventList);
+
+}
+
+
+// Decrease Quantity
+
+function decreaseQty(eventID) {
+
+    const existingEvent = bookings.find(function(item) {
+        return item.id === eventID &&
+               item.status === "Confirmed" &&
+               !item.paymentStatus;
+    });
+
+    if (!existingEvent) return;
+
+    if (existingEvent.quantity > 1) {
+
+        existingEvent.quantity--;
+
+        availability[eventID]++;
+
+    } else {
+
+        bookings = bookings.filter(function(item) {
+            return item.id !== eventID;
+        });
+
+        availability[eventID]++;
+
+    }
+
+    saveData();
+
+    showBooking();
+
+    showEvents(eventList);
+
+    updateBookingCount();
+
+}
+
+
+// Cancel Booking
+
+function removeItem(bookingID) {
+
+    if (confirm("Are you sure you want to cancel this booking?")) {
+
+        const existingBooking = bookings.find(function(item) {
+            return item.bookingId === bookingID;
+        });
+
+        if (!existingBooking) return;
+
+        if (existingBooking.paymentStatus === "Paid") {
+            alert("This booking is already paid and cannot be cancelled here.");
+            return;
+        }
+
+        availability[existingBooking.id] += existingBooking.quantity;
+
+        bookings = bookings.filter(function(item) {
+            return item.bookingId !== bookingID;
+        });
+
+        saveData();
+
+        showBooking();
+
+        showEvents(eventList);
+
+        updateBookingCount();
+
+        alert("Booking cancelled successfully!");
+
+    }
+
+}
+
+
+// Search Events
+
+function searchEvent() {
+
+    const searchText = document.getElementById("searchInput").value;
+
+    const filteredEvents = eventList.filter(function(event) {
+
+        return (
+            event.name.toLowerCase().includes(searchText.toLowerCase()) ||
+            event.description.toLowerCase().includes(searchText.toLowerCase()) ||
+            event.category.toLowerCase().includes(searchText.toLowerCase())
+        );
+
+    });
+
+    showEvents(filteredEvents);
+
+}
+
+
+// Booking Count
 
 function updateBookingCount() {
-    if (!qtyBadge) {
-        return;
-    }
 
-    const totalTickets = bookings.reduce(function (sum, booking) {
-        return booking.status === "Confirmed" ? sum + booking.quantity : sum;
+    const totalTickets = bookings.reduce(function(sum, item) {
+
+        return item.status === "Confirmed"
+            ? sum + item.quantity
+            : sum;
+
     }, 0);
 
-    qtyBadge.textContent = totalTickets;
+    const qty = document.getElementById("qty");
+
+    if (qty) {
+        qty.textContent = totalTickets;
+    }
+
 }
 
-// ---------- Filters ----------
 
-function applyFilters() {
-    renderEvents();
-}
+// Initialize
 
-function applyUrlFilters() {
-    const params = new URLSearchParams(window.location.search);
-    const categoryAliases = {
-        music: "Music",
-        sports: "Sports",
-        theatre: "Theatre",
-        comedy: "Comedy",
-        workshops: "Workshops",
-        exhibitions: "Exhibitions",
-        food: "Food",
-        conferences: "Conferences",
-        celebrations: "Celebrations"
-    };
+document.addEventListener("DOMContentLoaded", function() {
 
-    if (searchInput && params.get("search")) {
-        searchInput.value = params.get("search");
+    const search = document.getElementById("searchInput");
+
+    if (search) {
+        search.addEventListener("input", searchEvent);
     }
 
-    if (locationInput && params.get("location")) {
-        locationInput.value = params.get("location");
-    }
+    const cartLink = document.getElementById("bookModal");
 
-    if (dateInput && params.get("date")) {
-        dateInput.value = params.get("date");
-    }
+    if (cartLink) {
 
-    if (params.get("category")) {
-        const rawCategory = params.get("category").toLowerCase();
-        const mappedCategory = categoryAliases[rawCategory] || params.get("category");
+        cartLink.addEventListener("click", function(event) {
 
-        selectedCategory = mappedCategory;
+            event.preventDefault();
 
-        if (categorySelect) {
-            const hasOption = Array.from(categorySelect.options).some(function (option) {
-                return option.value === mappedCategory;
-            });
-            categorySelect.value = hasOption ? mappedCategory : "All";
-        }
+            showBooking();
 
-        document.querySelectorAll(".category-btn").forEach(function (button) {
-            button.classList.toggle("active", button.dataset.category === mappedCategory);
         });
 
-        if (mappedCategory === "All") {
-            selectedCategory = "All";
-        }
-    }
-}
-
-function clearAllFilters() {
-    if (searchInput) searchInput.value = "";
-    if (locationInput) locationInput.value = "";
-    if (dateInput) dateInput.value = "";
-    if (categorySelect) categorySelect.value = "All";
-
-    selectedCategory = "All";
-
-    document.querySelectorAll(".category-btn").forEach(function (button) {
-        button.classList.toggle("active", button.dataset.category === "All");
-    });
-
-    applyFilters();
-}
-
-// ---------- Newsletter ----------
-
-function setupNewsletter() {
-    const newsletterForm = document.getElementById("newsletterForm");
-
-    if (!newsletterForm) {
-        return;
     }
 
-    newsletterForm.addEventListener("submit", function (event) {
-        event.preventDefault();
+    showEvents(eventList);
 
-        const emailInput = document.getElementById("emailInput");
-
-        if (!emailInput) {
-            return;
-        }
-
-        const email = emailInput.value.trim();
-
-        if (!isValidEmail(email)) {
-            showNewsletterMessage(newsletterForm, "Please enter a valid email address.", "error");
-            return;
-        }
-
-        showNewsletterMessage(newsletterForm, "Thank you for subscribing!", "success");
-        newsletterForm.reset();
-    });
-}
-
-function showNewsletterMessage(form, message, type) {
-    let messageBox = form.parentElement.querySelector(".newsletter-message");
-
-    if (!messageBox) {
-        messageBox = document.createElement("p");
-        messageBox.className = "newsletter-message small mt-2 mb-0";
-        form.insertAdjacentElement("afterend", messageBox);
-    }
-
-    messageBox.textContent = message;
-    messageBox.className = "newsletter-message small mt-2 mb-0 " + (type === "error" ? "text-danger" : "text-success");
-}
-
-function isValidEmail(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
-
-function escapeHtml(value) {
-    return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-}
-
-// ---------- Initialize ----------
-
-function init() {
-    // Store the event catalog so event information is available in LocalStorage.
-    writeStorage(EVENTS_KEY, eventList);
-
-    applyUrlFilters();
-    renderEvents();
     showBooking();
+
     updateBookingCount();
 
-    if (searchInput) searchInput.addEventListener("input", applyFilters);
-    if (locationInput) locationInput.addEventListener("input", applyFilters);
-    if (dateInput) dateInput.addEventListener("change", applyFilters);
-    if (categorySelect) {
-        categorySelect.addEventListener("change", function () {
-            selectedCategory = "All";
-
-            document.querySelectorAll(".category-btn").forEach(function (button) {
-                button.classList.toggle("active", button.dataset.category === "All");
-            });
-
-            applyFilters();
-        });
-    }
-    if (sortSelect) sortSelect.addEventListener("change", applyFilters);
-    if (clearFiltersBtn) clearFiltersBtn.addEventListener("click", clearAllFilters);
-
-    const searchForm = document.getElementById("searchForm");
-    if (searchForm) {
-        searchForm.addEventListener("submit", function (event) {
-            event.preventDefault();
-            applyFilters();
-        });
-    }
-
-    document.querySelectorAll(".category-btn").forEach(function (button) {
-        button.addEventListener("click", function () {
-            selectedCategory = button.dataset.category;
-
-            document.querySelectorAll(".category-btn").forEach(function (item) {
-                item.classList.remove("active");
-            });
-
-            button.classList.add("active");
-
-            if (categorySelect) {
-                categorySelect.value = "All";
-            }
-
-            applyFilters();
-        });
-    });
-
-    if (ticketContainer) {
-        ticketContainer.addEventListener("click", function (event) {
-            const cancelButton = event.target.closest("[data-cancel-booking]");
-
-            if (cancelButton) {
-                cancelBooking(cancelButton.dataset.cancelBooking);
-            }
-        });
-    }
-
-    const bookLink = document.getElementById("bookModal");
-    if (bookLink) {
-        bookLink.addEventListener("click", function () {
-            showBooking();
-            openBookingsModal();
-        });
-    }
-
-    document.querySelectorAll('footer a[href="Events.html#bookings"]').forEach(function (link) {
-        link.addEventListener("click", function (event) {
-            event.preventDefault();
-            showBooking();
-            openBookingsModal();
-        });
-    });
-
-    setupNewsletter();
-
-    // Open My Bookings when the page is opened with Events.html#bookings.
-    if (window.location.hash === "#bookings") {
-        showBooking();
-        openBookingsModal();
-    }
-}
-
-document.addEventListener("DOMContentLoaded", init);
+});

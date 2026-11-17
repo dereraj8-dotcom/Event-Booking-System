@@ -170,125 +170,46 @@
     </footer>
 
     <script>
-        const loginForm = document.getElementById("loginForm");
-        const USERS_KEY = "eventGoUsers";
-        const CURRENT_USER_KEY = "eventGoCurrentUser";
+       
+const loginForm = document.getElementById("loginForm");
 
-        function readJSON(key, fallback) {
-            try {
-                const saved = localStorage.getItem(key);
-                return saved ? JSON.parse(saved) : fallback;
-            } catch (error) {
-                return fallback;
-            }
-        }
+loginForm.addEventListener("submit", function(event) {
 
-        function writeJSON(key, value) {
-            localStorage.setItem(key, JSON.stringify(value));
-        }
+    event.preventDefault();
 
-        async function hashPassword(password) {
-            if (window.crypto && window.crypto.subtle) {
-                const data = new TextEncoder().encode(password);
-                const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-                return Array.from(new Uint8Array(hashBuffer))
-                    .map(function (byte) {
-                        return byte.toString(16).padStart(2, "0");
-                    })
-                    .join("");
-            }
+    let email = document.getElementById("email").value.trim().toLowerCase();
+    let password = document.getElementById("password").value;
 
-            let hash = 5381;
-            for (let i = 0; i < password.length; i++) {
-                hash = ((hash << 5) + hash + password.charCodeAt(i)) | 0;
-            }
-            return "fallback-" + Math.abs(hash).toString(16);
-        }
+    if (!email || !email.includes("@") || !password) {
+        alert("Please enter valid login details!");
+        return;
+    }
 
-        function setFieldError(input, message) {
-            const group = input.closest(".form-group");
-            let errorBox = group.querySelector(".field-error");
+    let users = JSON.parse(localStorage.getItem("eventGoUsers")) || [];
 
-            if (!errorBox) {
-                errorBox = document.createElement("small");
-                errorBox.className = "field-error";
-                group.appendChild(errorBox);
-            }
+    let user = users.find(function(item) {
+        return item.email === email && item.password === password;
+    });
 
-            errorBox.textContent = message || "";
-        }
+    if (user) {
 
-        function clearErrors() {
-            loginForm.querySelectorAll(".field-error").forEach(function (errorBox) {
-                errorBox.textContent = "";
-            });
-        }
+        let currentUser = {
+            name: user.name,
+            email: user.email
+        };
 
-        function showMessage(message, type) {
-            let messageBox = loginForm.parentElement.querySelector(".form-message");
+        localStorage.setItem("eventGoCurrentUser", JSON.stringify(currentUser));
 
-            if (!messageBox) {
-                messageBox = document.createElement("p");
-                messageBox.className = "form-message";
-                loginForm.insertAdjacentElement("afterend", messageBox);
-            }
+        alert("Login successful!");
 
-            messageBox.textContent = message;
-            messageBox.className = "form-message " + type;
-        }
+        window.location.href = "index.html";
 
-        loginForm.addEventListener("submit", async function (event) {
-            event.preventDefault();
-            clearErrors();
+    } else {
+        alert("Invalid email or password!");
+    }
 
-            const emailInput = document.getElementById("email");
-            const passwordInput = document.getElementById("password");
-            const email = emailInput.value.trim().toLowerCase();
-            const password = passwordInput.value;
+});
 
-            let isValid = true;
-
-            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                setFieldError(emailInput, "Please enter a valid email address.");
-                isValid = false;
-            }
-
-            if (!password) {
-                setFieldError(passwordInput, "Please enter your password.");
-                isValid = false;
-            }
-
-            if (!isValid) {
-                return;
-            }
-
-            const users = readJSON(USERS_KEY, []);
-            const user = users.find(function (item) {
-                return item.email.toLowerCase() === email;
-            });
-
-            if (!user) {
-                showMessage("No account found with this email address.", "error");
-                return;
-            }
-
-            const passwordHash = await hashPassword(password);
-
-            if (passwordHash !== user.passwordHash) {
-                showMessage("Incorrect password. Please try again.", "error");
-                return;
-            }
-
-            writeJSON(CURRENT_USER_KEY, {
-                name: user.name,
-                email: user.email
-            });
-
-            showMessage("Login successful. Redirecting...", "success");
-            setTimeout(function () {
-                window.location.href = "index.html";
-            }, 800);
-        });
     </script>
 
 </body>

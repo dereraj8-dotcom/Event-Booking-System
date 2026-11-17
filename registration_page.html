@@ -245,195 +245,47 @@
     </footer>
 
     <script>
-        const registrationForm = document.getElementById("registrationForm");
-        const USERS_KEY = "eventGoUsers";
+      
+const form = document.getElementById("registrationForm");
 
-        function readJSON(key, fallback) {
-            try {
-                const saved = localStorage.getItem(key);
-                return saved ? JSON.parse(saved) : fallback;
-            } catch (error) {
-                return fallback;
-            }
-        }
+form.addEventListener("submit", function(event) {
+    event.preventDefault();
 
-        function writeJSON(key, value) {
-            localStorage.setItem(key, JSON.stringify(value));
-        }
+    let name = document.getElementById("fullname").value.trim();
+    let email = document.getElementById("email").value.trim().toLowerCase();
+    let password = document.getElementById("password").value;
+    let confirmPassword = document.getElementById("confirmPassword").value;
+    let phone = document.getElementById("phone").value.trim();
+    let dob = document.getElementById("dob").value;
+    let address = document.getElementById("address").value.trim();
+    let gender = document.querySelector('input[name="gender"]:checked');
 
-        async function hashPassword(password) {
-            if (window.crypto && window.crypto.subtle) {
-                const data = new TextEncoder().encode(password);
-                const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-                return Array.from(new Uint8Array(hashBuffer))
-                    .map(function (byte) {
-                        return byte.toString(16).padStart(2, "0");
-                    })
-                    .join("");
-            }
+    if (name.length < 2 || !email.includes("@") || password.length < 8 ||
+        password !== confirmPassword || !/^[0-9]{10}$/.test(phone) ||
+        !dob || new Date(dob) >= new Date() || !gender || address.length < 10) {
+        alert("Please enter valid details!");
+        return;
+    }
 
-            let hash = 5381;
-            for (let i = 0; i < password.length; i++) {
-                hash = ((hash << 5) + hash + password.charCodeAt(i)) | 0;
-            }
-            return "fallback-" + Math.abs(hash).toString(16);
-        }
+    let users = JSON.parse(localStorage.getItem("eventGoUsers")) || [];
 
-        function setFieldError(input, message) {
-            const group = input.closest(".form-group");
-            let errorBox = group.querySelector(".field-error");
+    if (users.some(user => user.email === email)) {
+        alert("Email already registered!");
+        return;
+    }
 
-            if (!errorBox) {
-                errorBox = document.createElement("small");
-                errorBox.className = "field-error";
-                group.appendChild(errorBox);
-            }
+    users.push({
+        name, email, password, phone, dob,
+        gender: gender.value, address
+    });
 
-            errorBox.textContent = message || "";
-        }
+    localStorage.setItem("eventGoUsers", JSON.stringify(users));
 
-        function setGroupError(group, message) {
-            let errorBox = group.querySelector(".field-error");
+    alert("Registration successful!");
+    form.reset();
+    window.location.href = "login_page.html";
+});
 
-            if (!errorBox) {
-                errorBox = document.createElement("small");
-                errorBox.className = "field-error";
-                group.appendChild(errorBox);
-            }
-
-            errorBox.textContent = message || "";
-        }
-
-        function clearErrors() {
-            registrationForm.querySelectorAll(".field-error").forEach(function (errorBox) {
-                errorBox.textContent = "";
-            });
-        }
-
-        function showMessage(message, type) {
-            let messageBox = registrationForm.parentElement.querySelector(".form-message");
-
-            if (!messageBox) {
-                messageBox = document.createElement("p");
-                messageBox.className = "form-message";
-                registrationForm.insertAdjacentElement("afterend", messageBox);
-            }
-
-            messageBox.textContent = message;
-            messageBox.className = "form-message " + type;
-        }
-
-        function isValidEmail(email) {
-            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-        }
-
-        registrationForm.addEventListener("submit", async function (event) {
-            event.preventDefault();
-            clearErrors();
-
-            const fullNameInput = document.getElementById("fullname");
-            const emailInput = document.getElementById("email");
-            const passwordInput = document.getElementById("password");
-            const confirmPasswordInput = document.getElementById("confirmPassword");
-            const phoneInput = document.getElementById("phone");
-            const dobInput = document.getElementById("dob");
-            const addressInput = document.getElementById("address");
-            const genderGroup = registrationForm.querySelector(".gender").closest(".form-group");
-
-            const fullName = fullNameInput.value.trim();
-            const email = emailInput.value.trim().toLowerCase();
-            const password = passwordInput.value;
-            const confirmPassword = confirmPasswordInput.value;
-            const phone = phoneInput.value.trim();
-            const dob = dobInput.value;
-            const address = addressInput.value.trim();
-            const genderInput = registrationForm.querySelector('input[name="gender"]:checked');
-
-            let isValid = true;
-
-            if (fullName.length < 2) {
-                setFieldError(fullNameInput, "Please enter your full name.");
-                isValid = false;
-            }
-
-            if (!isValidEmail(email)) {
-                setFieldError(emailInput, "Please enter a valid email address.");
-                isValid = false;
-            }
-
-            if (password.length < 8) {
-                setFieldError(passwordInput, "Password must be at least 8 characters.");
-                isValid = false;
-            }
-
-            if (confirmPassword !== password) {
-                setFieldError(confirmPasswordInput, "Passwords do not match.");
-                isValid = false;
-            }
-
-            if (!/^[0-9]{10}$/.test(phone)) {
-                setFieldError(phoneInput, "Please enter a valid 10-digit phone number.");
-                isValid = false;
-            }
-
-            const dobDate = new Date(dob);
-            const today = new Date();
-            const age = today.getFullYear() - dobDate.getFullYear();
-
-            if (!dob || isNaN(dobDate.getTime()) || dobDate > today || age < 13) {
-                setFieldError(dobInput, "You must be at least 13 years old.");
-                isValid = false;
-            }
-
-            if (!genderInput) {
-                setGroupError(genderGroup, "Please select your gender.");
-                isValid = false;
-            }
-
-            if (address.length < 10) {
-                setFieldError(addressInput, "Please enter a complete address.");
-                isValid = false;
-            }
-
-            if (!isValid) {
-                return;
-            }
-
-            const users = readJSON(USERS_KEY, []);
-            const emailExists = users.some(function (user) {
-                return user.email.toLowerCase() === email;
-            });
-
-            if (emailExists) {
-                setFieldError(emailInput, "An account with this email already exists.");
-                return;
-            }
-
-            const passwordHash = await hashPassword(password);
-
-            users.push({
-                name: fullName,
-                email: email,
-                phone: phone,
-                dob: dob,
-                gender: genderInput.value,
-                address: address,
-                passwordHash: passwordHash,
-                createdAt: new Date().toISOString()
-            });
-
-            writeJSON(USERS_KEY, users);
-            showMessage("Account created successfully. Redirecting to login...", "success");
-            registrationForm.reset();
-
-            setTimeout(function () {
-                window.location.href = "login_page.html";
-            }, 1200);
-        });
-
-        registrationForm.addEventListener("reset", function () {
-            clearErrors();
-        });
     </script>
 
 </body>

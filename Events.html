@@ -169,6 +169,63 @@
 </div>
 
 
+<!-- Payment Details Modal -->
+<div class="modal fade" id="paymentModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Complete Your Payment</h5>
+                <button type="button" class="btn-close"
+                    data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <h6>Customer Details</h6>
+
+                <div class="mb-3">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" id="customerName" class="form-control"
+                        placeholder="Enter your name" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" id="customerEmail" class="form-control"
+                        placeholder="Enter your email" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Phone Number</label>
+                    <input type="tel" id="customerPhone" class="form-control"
+                        placeholder="Enter phone number" maxlength="10" required>
+                </div>
+
+                <hr>
+
+                <h6>Payment Method</h6>
+
+                <div class="mb-3">
+                    <select id="paymentMethod" class="form-select">
+                        <option value="">Select Payment Method</option>
+                        <option value="UPI">UPI</option>
+                        <option value="Credit/Debit Card">Credit/Debit Card</option>
+                        <option value="Net Banking">Net Banking</option>
+                        <option value="Cash at Venue">Cash at Venue</option>
+                    </select>
+                </div>
+
+                <div id="paymentFields"></div>
+
+                <button type="button" class="btn btn-success w-100 mt-3"
+                    onclick="confirmPayment()">
+                    Confirm Payment
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 
 
